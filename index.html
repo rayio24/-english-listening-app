@@ -4,868 +4,3946 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>English Listening Trainer</title>
+
 <style>
-:root{--bg:#f2f2f7;--card:#fff;--fg:#1c1c1e;--sub:#8e8e93;--fill:#eef0f4;--blue:#0a84ff;--red:#ff3b30;--dock:rgba(255,255,255,.85)}
-@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--fg:#f2f2f7;--fill:#2c2c2e;--dock:rgba(28,28,30,.85)}}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:16px}
-button,input,textarea,select{font:inherit}
-button{border:none;border-radius:14px;background:var(--blue);color:#fff;min-height:48px;padding:10px 14px;font-weight:600;cursor:pointer;touch-action:manipulation}
-button:active{opacity:.7;transform:scale(.98)}
-button:disabled{opacity:.35}
-button.tonal{background:var(--fill);color:var(--blue)}
-button.tonal.on{background:var(--blue);color:#fff}
-button.rec{background:var(--fill);color:var(--red)}
-button.rec.on{background:var(--red);color:#fff;animation:pulse 1.2s infinite}
-button.icon-btn{background:transparent;min-width:44px;min-height:44px;padding:0;font-size:20px}
-@keyframes pulse{50%{opacity:.6}}
-input,textarea,select{width:100%;border:none;border-radius:14px;padding:14px;background:var(--fill);color:var(--fg);font-size:16px}
-textarea{min-height:150px;resize:vertical}
-select{width:auto}
-h1{font-size:28px;margin:0}
-h2{font-size:20px;margin:0}
-h3{font-size:17px;margin:0 0 10px}
-p{line-height:1.6;margin:8px 0}
-.app{width:min(100%,720px);margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px calc(120px + env(safe-area-inset-bottom,0px))}
-.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
-.card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:16px}
-.hidden{display:none!important}
-.muted{color:var(--sub);font-size:14px}
-.stack{display:flex;flex-direction:column;gap:10px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.label{font-size:13px;font-weight:700;color:var(--sub);margin:16px 0 8px}
-.video-wrap{width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;margin-top:10px}
-#player{width:100%;height:100%}
-.seek-wrap input[type=range]{padding:0;background:transparent;height:32px}
-.time-row{display:flex;justify-content:space-between;color:var(--sub);font-size:13px}
-.ab-values{display:flex;gap:16px;color:var(--sub);font-size:14px;margin-top:10px}
-details.script-builder{background:var(--card);border-radius:20px;margin-bottom:16px;overflow:hidden}
-details.script-builder summary{list-style:none;cursor:pointer;padding:18px;font-size:17px;font-weight:700}
-details.script-builder summary::-webkit-details-marker{display:none}
-details.script-builder summary::before{content:"▶";display:inline-block;font-size:12px;margin-right:8px;transition:transform .2s}
-details.script-builder[open] summary::before{transform:rotate(90deg)}
-.builder-body{padding:0 18px 18px}
-.sentence-list{display:flex;flex-direction:column;gap:8px;margin:12px 0}
-.sentence-item{display:flex;gap:12px;align-items:flex-start;background:var(--fill);border-radius:12px;padding:12px}
-.sentence-item input{width:22px;height:22px;flex:none;padding:0;margin:1px 0 0}
-.sentence-text{line-height:1.5}
-.section-card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:16px}
-.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.chips{display:flex;gap:8px;margin-bottom:12px}
-.chip{background:var(--fill);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--sub);font-variant-numeric:tabular-nums}
-.section-answer{background:var(--fill);border-radius:14px;padding:14px;line-height:1.6;margin-bottom:12px}
-.dictation{margin-top:14px;padding:14px;background:var(--fill);border-radius:14px}
-.dictation textarea{background:var(--card);min-height:130px}
-.dictation .grid2,.dictation-result{margin-top:12px}
-.answer-box{background:var(--card);border-radius:12px;padding:14px;line-height:1.6;white-space:pre-wrap}
-.library-item{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px}
-.library-title{font-size:17px;font-weight:700;margin-bottom:6px}
-.library-url{color:var(--sub);font-size:13px;word-break:break-all;margin-bottom:12px}
-.dock{position:fixed;left:0;right:0;bottom:0;background:var(--dock);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));z-index:10}
-.dock-in{width:min(100%,720px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.dock button{min-width:56px}
-.dock .play{width:64px;height:64px;border-radius:50%;font-size:26px;padding:0}
-.dock select{padding:12px 10px}
+:root{
+  --bg:#f2f2f7;
+  --card:#fff;
+  --fg:#1c1c1e;
+  --sub:#8e8e93;
+  --fill:#eef0f4;
+  --blue:#0a84ff;
+  --red:#ff3b30;
+  --dock:rgba(255,255,255,.85)
+}
+
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#000;
+    --card:#1c1c1e;
+    --fg:#f2f2f7;
+    --fill:#2c2c2e;
+    --dock:rgba(28,28,30,.85)
+  }
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px
+}
+
+button,input,textarea,select{
+  font:inherit
+}
+
+button{
+  border:none;
+  border-radius:14px;
+  background:var(--blue);
+  color:#fff;
+  min-height:48px;
+  padding:10px 14px;
+  font-weight:600;
+  cursor:pointer;
+  touch-action:manipulation
+}
+
+button:active{
+  opacity:.7;
+  transform:scale(.98)
+}
+
+button:disabled{
+  opacity:.35
+}
+
+button.tonal{
+  background:var(--fill);
+  color:var(--blue)
+}
+
+button.tonal.on{
+  background:var(--blue);
+  color:#fff
+}
+
+button.rec{
+  background:var(--fill);
+  color:var(--red)
+}
+
+button.rec.on{
+  background:var(--red);
+  color:#fff;
+  animation:pulse 1.2s infinite
+}
+
+button.icon-btn{
+  background:transparent;
+  min-width:44px;
+  min-height:44px;
+  padding:0;
+  font-size:20px
+}
+
+@keyframes pulse{
+  50%{opacity:.6}
+}
+
+input,textarea,select{
+  width:100%;
+  border:none;
+  border-radius:14px;
+  padding:14px;
+  background:var(--fill);
+  color:var(--fg);
+  font-size:16px
+}
+
+textarea{
+  min-height:150px;
+  resize:vertical
+}
+
+select{
+  width:auto
+}
+
+h1{
+  font-size:28px;
+  margin:0
+}
+
+h2{
+  font-size:20px;
+  margin:0
+}
+
+h3{
+  font-size:17px;
+  margin:0 0 10px
+}
+
+p{
+  line-height:1.6;
+  margin:8px 0
+}
+
+.app{
+  width:min(100%,720px);
+  margin:0 auto;
+  padding:
+    calc(env(safe-area-inset-top,0px) + 14px)
+    16px
+    calc(120px + env(safe-area-inset-bottom,0px))
+}
+
+.top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px
+}
+
+.card{
+  background:var(--card);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:16px
+}
+
+.hidden{
+  display:none!important
+}
+
+.muted{
+  color:var(--sub);
+  font-size:14px
+}
+
+.stack{
+  display:flex;
+  flex-direction:column;
+  gap:10px
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:10px
+}
+
+.label{
+  font-size:13px;
+  font-weight:700;
+  color:var(--sub);
+  margin:16px 0 8px
+}
+
+.video-wrap{
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  border-radius:14px;
+  overflow:hidden;
+  margin-top:10px
+}
+
+#player{
+  width:100%;
+  height:100%
+}
+
+.seek-wrap input[type=range]{
+  padding:0;
+  background:transparent;
+  height:32px
+}
+
+.time-row{
+  display:flex;
+  justify-content:space-between;
+  color:var(--sub);
+  font-size:13px
+}
+
+.ab-values{
+  display:flex;
+  gap:16px;
+  color:var(--sub);
+  font-size:14px;
+  margin-top:10px
+}
+
+details.script-builder{
+  background:var(--card);
+  border-radius:20px;
+  margin-bottom:16px;
+  overflow:hidden
+}
+
+details.script-builder summary{
+  list-style:none;
+  cursor:pointer;
+  padding:18px;
+  font-size:17px;
+  font-weight:700
+}
+
+details.script-builder summary::-webkit-details-marker{
+  display:none
+}
+
+details.script-builder summary::before{
+  content:"▶";
+  display:inline-block;
+  font-size:12px;
+  margin-right:8px;
+  transition:transform .2s
+}
+
+details.script-builder[open] summary::before{
+  transform:rotate(90deg)
+}
+
+.builder-body{
+  padding:0 18px 18px
+}
+
+.sentence-list{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin:12px 0
+}
+
+.sentence-item{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  background:var(--fill);
+  border-radius:12px;
+  padding:12px
+}
+
+.sentence-item input{
+  width:22px;
+  height:22px;
+  flex:none;
+  padding:0;
+  margin:1px 0 0
+}
+
+.sentence-text{
+  line-height:1.5
+}
+
+.section-card{
+  background:var(--card);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:16px
+}
+
+.sec-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px
+}
+
+.chips{
+  display:flex;
+  gap:8px;
+  margin-bottom:12px
+}
+
+.chip{
+  background:var(--fill);
+  border-radius:999px;
+  padding:5px 12px;
+  font-size:13px;
+  color:var(--sub);
+  font-variant-numeric:tabular-nums
+}
+
+.section-answer{
+  background:var(--fill);
+  border-radius:14px;
+  padding:14px;
+  line-height:1.6;
+  margin-bottom:12px
+}
+
+.dictation{
+  margin-top:14px;
+  padding:14px;
+  background:var(--fill);
+  border-radius:14px
+}
+
+.dictation textarea{
+  background:var(--card);
+  min-height:130px
+}
+
+.dictation-result{
+  margin-top:12px
+}
+
+.answer-box{
+  background:var(--card);
+  border-radius:12px;
+  padding:14px;
+  line-height:1.6;
+  white-space:pre-wrap
+}
+
+.library-item{
+  background:var(--card);
+  border-radius:16px;
+  padding:16px;
+  margin-bottom:12px
+}
+
+.library-title{
+  font-size:17px;
+  font-weight:700;
+  margin-bottom:6px
+}
+
+.library-url{
+  color:var(--sub);
+  font-size:13px;
+  word-break:break-all;
+  margin-bottom:12px
+}
+
+.dock{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  background:var(--dock);
+  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(20px);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+  z-index:10
+}
+
+.dock-in{
+  width:min(100%,720px);
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px
+}
+
+.dock button{
+  min-width:56px
+}
+
+.dock .play{
+  width:64px;
+  height:64px;
+  border-radius:50%;
+  font-size:26px;
+  padding:0
+}
+
+.dock select{
+  padding:12px 10px
+}
 </style>
 </head>
+
 <body>
+
 <div class="app">
 
+<!-- =====================================================
+     メイン
+===================================================== -->
+
 <div id="mainView">
+
   <div class="top-row">
     <h1>Listening Trainer</h1>
-    <button class="tonal" onclick="showLibrary()">📚 ライブラリ</button>
+    <button class="tonal" id="libraryBtn">📚 ライブラリ</button>
   </div>
 
+
+  <!-- 動画 -->
+
   <div class="card">
+
     <div class="stack">
-      <input id="videoUrl" type="text" inputmode="url" placeholder="YouTube URLを入力">
-      <button onclick="loadVideo()">動画を読み込む</button>
-    </div>
-    <p id="videoTitle" class="muted"></p>
-    <div class="video-wrap"><div id="player"></div></div>
-    <div class="seek-wrap">
-      <input id="seekBar" type="range" min="0" max="100" value="0" step="0.1" oninput="seekVideo(this.value)">
-      <div class="time-row"><span id="currentTime">0:00</span><span id="durationTime">0:00</span></div>
+
+      <input
+        id="videoUrl"
+        type="text"
+        inputmode="url"
+        placeholder="YouTube URLを入力"
+      >
+
+      <button id="loadVideoBtn">
+        動画を読み込む
+      </button>
+
     </div>
 
-    <div class="label">A/Bリピート</div>
+    <p id="videoTitle" class="muted"></p>
+
+    <div class="video-wrap">
+      <div id="player"></div>
+    </div>
+
+    <div class="seek-wrap">
+
+      <input
+        id="seekBar"
+        type="range"
+        min="0"
+        max="100"
+        value="0"
+        step="0.1"
+      >
+
+      <div class="time-row">
+        <span id="currentTime">0:00</span>
+        <span id="durationTime">0:00</span>
+      </div>
+
+    </div>
+
+
+    <div class="label">
+      A/Bリピート
+    </div>
+
     <div class="grid2">
-      <button class="tonal" onclick="setAPoint()">A を設定</button>
-      <button class="tonal" onclick="setBPoint()">B を設定</button>
-      <button id="repeatButton" class="tonal" onclick="toggleABRepeat()">🔁 リピートOFF</button>
-      <button class="tonal" onclick="resetAB()">リセット</button>
+
+      <button class="tonal" id="setABtn">
+        A を設定
+      </button>
+
+      <button class="tonal" id="setBBtn">
+        B を設定
+      </button>
+
+      <button
+        id="repeatButton"
+        class="tonal"
+      >
+        🔁 リピートOFF
+      </button>
+
+      <button
+        class="tonal"
+        id="resetABBtn"
+      >
+        リセット
+      </button>
+
     </div>
+
     <div class="ab-values">
-      <span>A: <strong id="aPoint">-</strong></span>
-      <span>B: <strong id="bPoint">-</strong></span>
+
+      <span>
+        A:
+        <strong id="aPoint">-</strong>
+      </span>
+
+      <span>
+        B:
+        <strong id="bPoint">-</strong>
+      </span>
+
     </div>
+
   </div>
+
+
+  <!-- スクリプト -->
 
   <div class="card">
+
     <h3>スクリプト</h3>
-    <textarea id="scriptInput" placeholder="ここに動画のスクリプト全文を貼り付けてください"></textarea>
-    <div class="stack" style="margin-top:10px"><button onclick="saveScript()">スクリプトを保存</button></div>
-    <div id="scriptStatus" class="muted"></div>
+
+    <textarea
+      id="scriptInput"
+      placeholder="ここに動画のスクリプト全文を貼り付けてください"
+    ></textarea>
+
+    <div
+      class="stack"
+      style="margin-top:10px"
+    >
+      <button id="saveScriptBtn">
+        スクリプトを保存
+      </button>
+    </div>
+
+    <div
+      id="scriptStatus"
+      class="muted"
+    ></div>
+
   </div>
+
+
+  <!-- スクリプト→セクション -->
 
   <details class="script-builder">
-    <summary>スクリプトからセクションを作成</summary>
+
+    <summary>
+      スクリプトからセクションを作成
+    </summary>
+
     <div class="builder-body">
-      <p class="muted">セクションにしたい英文を選択して、作成ボタンを押してください。</p>
-      <div id="sentenceList" class="sentence-list"></div>
-      <div class="stack"><button onclick="createSectionFromSelected()">選択した文からセクションを作成</button></div>
+
+      <p class="muted">
+        セクションにしたい英文を選択して、作成ボタンを押してください。
+      </p>
+
+      <div
+        id="sentenceList"
+        class="sentence-list"
+      ></div>
+
+      <div class="stack">
+
+        <button id="createSectionBtn">
+          選択した文からセクションを作成
+        </button>
+
+      </div>
+
     </div>
+
   </details>
 
-  <h3 style="margin:8px 4px 12px">セクション</h3>
+
+  <h3 style="margin:8px 4px 12px">
+    セクション
+  </h3>
+
   <div id="sections"></div>
 
+
+  <!-- 下部操作 -->
+
   <div class="dock">
+
     <div class="dock-in">
-      <button class="tonal" onclick="rewindVideo()">↩ 5s</button>
-      <button id="playBtn" class="play" onclick="togglePlay()">▶</button>
-      <select id="speedSelect" onchange="changeSpeed()">
-        <option value="0.5">0.5x</option>
-        <option value="0.75">0.75x</option>
-        <option value="1" selected>1.0x</option>
-        <option value="1.25">1.25x</option>
-        <option value="1.5">1.5x</option>
-        <option value="1.75">1.75x</option>
-        <option value="2">2.0x</option>
+
+      <button
+        class="tonal"
+        id="rewindBtn"
+      >
+        ↩ 5s
+      </button>
+
+      <button
+        id="playBtn"
+        class="play"
+      >
+        ▶
+      </button>
+
+      <select id="speedSelect">
+
+        <option value="0.5">
+          0.5x
+        </option>
+
+        <option value="0.75">
+          0.75x
+        </option>
+
+        <option
+          value="1"
+          selected
+        >
+          1.0x
+        </option>
+
+        <option value="1.25">
+          1.25x
+        </option>
+
+        <option value="1.5">
+          1.5x
+        </option>
+
+        <option value="1.75">
+          1.75x
+        </option>
+
+        <option value="2">
+          2.0x
+        </option>
+
       </select>
+
     </div>
+
   </div>
+
 </div>
 
-<div id="libraryView" class="hidden">
+
+<!-- =====================================================
+     ライブラリ
+===================================================== -->
+
+<div
+  id="libraryView"
+  class="hidden"
+>
+
   <div class="top-row">
+
     <h1>ライブラリ</h1>
-    <button class="tonal" onclick="closeLibrary()">← 戻る</button>
+
+    <button
+      class="tonal"
+      id="closeLibraryBtn"
+    >
+      ← 戻る
+    </button>
+
   </div>
+
   <div id="libraryList"></div>
-</div>
 
 </div>
 
-<script>
-/* ========== 状態 ========== */
-let player = null, playerReady = false, pendingId = null;
-let currentVideoId = null, currentVideoTitle = "";
-let aPoint = null, bPoint = null, repeatEnabled = false;
-let duration = 0, isSeeking = false;
-let sections = [], scriptSentences = [];
-const dictationAnswers = {};
-const STORAGE_KEY = "englishTrainerVideos";
-const $ = id => document.getElementById(id);
+</div>
 
-/* 録音 */
-const recBlobs = {};
-let mediaRecorder = null, recordingId = null, recChunks = [];
-let curAudio = null, compareId = null;
 
-/* ========== IndexedDB(録音の保存) ========== */
-function idbOpen() {
-  return new Promise((res, rej) => {
-    const r = indexedDB.open("englishTrainerRec", 1);
-    r.onupgradeneeded = () => r.result.createObjectStore("rec");
-    r.onsuccess = () => res(r.result);
-    r.onerror = () => rej(r.error);
-  });
-}
-async function idbOp(mode, fn) {
-  const db = await idbOpen();
-  return new Promise((res, rej) => {
-    const tx = db.transaction("rec", mode);
-    const rq = fn(tx.objectStore("rec"));
-    tx.oncomplete = () => res(rq && rq.result);
-    tx.onerror = () => rej(tx.error);
-  });
-}
-const idbPut = (k, v) => idbOp("readwrite", s => s.put(v, k));
-const idbGet = k => idbOp("readonly", s => s.get(k));
-const idbDel = k => idbOp("readwrite", s => s.delete(k));
-const idbKeys = () => idbOp("readonly", s => s.getAllKeys());
-
-/* ========== YouTube ========== */
-function onYouTubeIframeAPIReady() { createPlayer(); }
-
-function createPlayer() {
-  if (player) return;
-  player = new YT.Player("player", {
-    playerVars: { playsinline: 1, rel: 0 },
-    events: {
-      onReady: function () {
-        playerReady = true;
-        if (pendingId) { player.loadVideoById(pendingId); pendingId = null; }
-        updatePlayerInfo();
-      },
-      onStateChange: function (e) {
-        updatePlayerInfo();
-        $("playBtn").textContent = e.data === 1 ? "⏸" : "▶";
-        if (e.data === 1) changeSpeed();
-      }
-    }
-  });
-}
-
-function loadIntoPlayer(id) {
-  if (playerReady) player.loadVideoById(id);
-  else pendingId = id;
-}
-
-function extractVideoId(url) {
-  if (!url) return null;
-  url = url.trim();
-  if (/^[\w-]{11}$/.test(url)) return url;
-  try {
-    const u = new URL(url);
-    const h = u.hostname.replace(/^www\.|^m\./, "");
-    if (h === "youtu.be") return u.pathname.slice(1).split("/")[0] || null;
-    if (h.endsWith("youtube.com")) {
-      const v = u.searchParams.get("v");
-      if (v) return v;
-      const m = u.pathname.match(/^\/(?:shorts|embed|live)\/([\w-]+)/);
-      if (m) return m[1];
-    }
-  } catch (e) {}
-  return null;
-}
-
-/* ========== Storage ========== */
-function getVideos() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
-  catch (e) { return {}; }
-}
-function saveVideos(v) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(v)); }
-  catch (e) { alert("保存に失敗しました。"); }
-}
-
-/* ========== 動画読み込み ========== */
-function loadVideo() {
-  const url = $("videoUrl").value.trim();
-  const id = extractVideoId(url);
-  if (!id) { alert("YouTube URLを確認してください。"); return; }
-  currentVideoId = id;
-  const videos = getVideos();
-  if (!videos[id]) {
-    videos[id] = { id: id, title: "", url: url, script: "", scriptSentences: [], sections: [] };
-  } else {
-    videos[id].url = url;
-  }
-  saveVideos(videos);
-  resetAB();
-  loadCurrentVideoData();
-  loadIntoPlayer(id);
-}
-
-function loadCurrentVideoData() {
-  if (!currentVideoId) return;
-  const data = getVideos()[currentVideoId];
-  if (!data) return;
-  currentVideoTitle = data.title || "";
-  $("videoUrl").value = data.url || `https://www.youtube.com/watch?v=${currentVideoId}`;
-  $("videoTitle").textContent = currentVideoTitle;
-  $("scriptInput").value = data.script || "";
-  scriptSentences = data.scriptSentences || [];
-  sections = data.sections || [];
-  renderSentenceList();
-  renderSections();
-}
-
-function updatePlayerInfo() {
-  if (!player || !player.getVideoData) return;
-  try {
-    const d = player.getVideoData();
-    if (!d || !d.video_id || d.video_id !== currentVideoId) return;
-    if (d.title) {
-      currentVideoTitle = d.title;
-      $("videoTitle").textContent = d.title;
-      const v = getVideos();
-      if (v[currentVideoId] && v[currentVideoId].title !== d.title) {
-        v[currentVideoId].title = d.title;
-        saveVideos(v);
-      }
-    }
-  } catch (e) {}
-}
-
-/* ========== プレイヤー操作 ========== */
-function playVideo() { if (playerReady) player.playVideo(); }
-function pauseVideo() { if (playerReady) player.pauseVideo(); }
-function togglePlay() {
-  if (!playerReady) return;
-  compareId = null;
-  stopAudio();
-  if (player.getPlayerState() === 1) player.pauseVideo();
-  else player.playVideo();
-}
-function rewindVideo() {
-  if (!playerReady) return;
-  player.seekTo(Math.max(0, player.getCurrentTime() - 5), true);
-}
-function seekVideo(value) {
-  if (!playerReady || duration <= 0) return;
-  player.seekTo(Number(value) / 100 * duration, true);
-}
-function changeSpeed() {
-  if (!playerReady) return;
-  player.setPlaybackRate(Number($("speedSelect").value));
-}
-
-["touchstart", "mousedown"].forEach(ev =>
-  $("seekBar").addEventListener(ev, () => { isSeeking = true; }, { passive: true }));
-["touchend", "touchcancel", "mouseup"].forEach(ev =>
-  window.addEventListener(ev, () => { isSeeking = false; }));
-
-/* ========== A/B ========== */
-function setAPoint() {
-  if (!playerReady) return;
-  aPoint = player.getCurrentTime();
-  $("aPoint").textContent = formatTime(aPoint);
-}
-function setBPoint() {
-  if (!playerReady) return;
-  bPoint = player.getCurrentTime();
-  $("bPoint").textContent = formatTime(bPoint);
-}
-function toggleABRepeat() {
-  repeatEnabled = !repeatEnabled;
-  $("repeatButton").textContent = repeatEnabled ? "🔁 リピートON" : "🔁 リピートOFF";
-  $("repeatButton").classList.toggle("on", repeatEnabled);
-}
-function resetAB() {
-  aPoint = null; bPoint = null; repeatEnabled = false;
-  $("aPoint").textContent = "-";
-  $("bPoint").textContent = "-";
-  $("repeatButton").textContent = "🔁 リピートOFF";
-  $("repeatButton").classList.remove("on");
-}
-
-/* ========== タイマー ========== */
-setInterval(function () {
-  if (!playerReady || !player.getCurrentTime) return;
-  try {
-    const cur = player.getCurrentTime();
-    duration = player.getDuration() || 0;
-    $("currentTime").textContent = formatTime(cur);
-    $("durationTime").textContent = formatTime(duration);
-    if (duration > 0 && !isSeeking) $("seekBar").value = cur / duration * 100;
-
-    // 聞き比べ:お手本の終わりで自分の録音を再生
-    if (compareId) {
-      const cs = sections.find(x => x.id === compareId);
-      if (!cs) { compareId = null; }
-      else if (cur >= cs.end) {
-        const id = compareId;
-        compareId = null;
-        player.pauseVideo();
-        playRecording(id, true);
-        return;
-      }
-    }
-
-    if (repeatEnabled && aPoint !== null && bPoint !== null && bPoint > aPoint && cur >= bPoint) {
-      player.seekTo(aPoint, true);
-      return;
-    }
-    const s = sections.find(x => x.repeat && x.start !== null && x.end !== null && cur >= x.end);
-    if (s && !compareId) player.seekTo(s.start, true);
-  } catch (e) {}
-}, 200);
-
-/* ========== スクリプト ========== */
-function saveScript() {
-  if (!currentVideoId) { alert("先に動画を読み込んでください。"); return; }
-  const text = $("scriptInput").value.trim();
-  const next = splitScript(text);
-
-  // 同じ文は元のIDを引き継ぐ(セクションが壊れないように)
-  const pool = {};
-  scriptSentences.forEach(s => { (pool[s.text] = pool[s.text] || []).push(s.id); });
-  next.forEach(s => {
-    const q = pool[s.text];
-    if (q && q.length) s.id = q.shift();
-  });
-  scriptSentences = next;
-
-  const valid = new Set(next.map(s => s.id));
-  sections.forEach(sec => {
-    if (sec.sentenceIds) sec.sentenceIds = sec.sentenceIds.filter(i => valid.has(i));
-  });
-
-  const videos = getVideos();
-  if (!videos[currentVideoId]) return;
-  videos[currentVideoId].script = text;
-  videos[currentVideoId].scriptSentences = scriptSentences;
-  videos[currentVideoId].sections = sections;
-  saveVideos(videos);
-
-  renderSentenceList();
-  renderSections();
-  $("scriptStatus").textContent = `${next.length}文に分割しました。`;
-}
-
-const ABBR = /\b(?:Mr|Mrs|Ms|Dr|Prof)\.$/;
-
-function splitScript(text) {
-  if (!text.trim()) return [];
-  const lines = text.replace(/\r\n/g, "\n").split(/\n+/).map(x => x.trim()).filter(Boolean);
-  const out = [];
-  lines.forEach(line => {
-    const m = line.match(/[^.!?]+(?:[.!?]+["'”’)]*|$)/g);
-    if (!m) { out.push(line); return; }
-    let buf = "";
-    m.forEach(p => {
-      p = p.trim();
-      if (!p) return;
-      buf = buf ? buf + " " + p : p;
-      if (ABBR.test(buf)) return;
-      out.push(buf);
-      buf = "";
-    });
-    if (buf) out.push(buf);
-  });
-  return out.map((t, i) => ({
-    id: `sentence_${Date.now()}_${i}_${Math.random().toString(36).slice(2, 7)}`,
-    text: t
-  }));
-}
-
-/* ========== 文一覧 ========== */
-function renderSentenceList() {
-  const c = $("sentenceList");
-  c.innerHTML = "";
-  if (!scriptSentences.length) {
-    c.innerHTML = `<p class="muted">まだスクリプトがありません。</p>`;
-    return;
-  }
-  scriptSentences.forEach(s => {
-    const item = document.createElement("label");
-    item.className = "sentence-item";
-    item.innerHTML = `<input type="checkbox" data-sentence-id="${s.id}"><div class="sentence-text">${escapeHtml(s.text)}</div>`;
-    c.appendChild(item);
-  });
-}
-
-/* ========== セクション作成 ========== */
-function createSectionFromSelected() {
-  if (!currentVideoId) { alert("先に動画を読み込んでください。"); return; }
-  const checked = Array.from(document.querySelectorAll('#sentenceList input[type="checkbox"]:checked'));
-  if (!checked.length) { alert("セクションにしたい文を選択してください。"); return; }
-
-  sections.push({
-    id: `section_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    start: null, end: null, repeat: false, answer: "",
-    sentenceIds: checked.map(cb => cb.dataset.sentenceId)
-  });
-  saveCurrentVideo();
-  renderSections();
-  checked.forEach(cb => { cb.checked = false; });
-
-  setTimeout(() => {
-    const last = document.querySelector("#sections .section-card:last-child");
-    if (last) last.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, 100);
-}
-
-function getSectionAnswer(section) {
-  if (section.sentenceIds && section.sentenceIds.length) {
-    return section.sentenceIds
-      .map(id => { const s = scriptSentences.find(x => x.id === id); return s ? s.text : ""; })
-      .filter(Boolean)
-      .join(" ");
-  }
-  return section.answer || "";
-}
-
-/* ========== セクション表示 ========== */
-function renderSections() {
-  const c = $("sections");
-
-  // 再描画しても、開いているディクテーションを消さない
-  const saved = {};
-  c.querySelectorAll(".dictation:not(.hidden)").forEach(d => {
-    const ta = d.querySelector("textarea");
-    saved[d.id.replace("dictation-", "")] = { html: d.innerHTML, value: ta ? ta.value : "" };
-  });
-
-  c.innerHTML = "";
-  if (!sections.length) {
-    c.innerHTML = `<div class="card"><p class="muted">まだセクションがありません。</p></div>`;
-    return;
-  }
-
-  sections.forEach((section, index) => {
-    const id = section.id;
-    const answer = getSectionAnswer(section);
-    const startText = section.start !== null ? formatTime(section.start) : "--:--";
-    const endText = section.end !== null ? formatTime(section.end) : "--:--";
-    const timeLabel = section.start === null ? "⏱ 開始を設定"
-      : section.end === null ? "⏱ 終了を設定" : "⏱ 時間を変更";
-    const has = !!recBlobs[id];
-    const recording = recordingId === id;
-
-    const card = document.createElement("div");
-    card.className = "section-card";
-    card.innerHTML = `
-      <div class="sec-head">
-        <h2>Section ${index + 1}</h2>
-        <button class="icon-btn" aria-label="削除" onclick="deleteSection('${id}')">🗑</button>
-      </div>
-      <div class="chips"><span class="chip">A ${startText}</span><span class="chip">B ${endText}</span></div>
-      <div class="section-answer">${escapeHtml(answer)}</div>
-      <div class="grid2">
-        <button onclick="playSection('${id}')">▶ 再生</button>
-        <button class="tonal ${section.repeat ? "on" : ""}" onclick="toggleSectionRepeat('${id}')">🔁 リピート${section.repeat ? "ON" : "OFF"}</button>
-        <button class="tonal" onclick="setSectionTime('${id}')">${timeLabel}</button>
-        <button class="tonal" onclick="openDictation('${id}')">📝 ディクテーション</button>
-      </div>
-      <div class="label">発音練習</div>
-      <div class="grid3">
-        <button class="rec ${recording ? "on" : ""}" onclick="toggleRecord('${id}')">${recording ? "⏹ 停止" : "🎙 録音"}</button>
-        <button class="tonal" ${has ? "" : "disabled"} onclick="playRecording('${id}')">▶ 自分</button>
-        <button class="tonal" ${has ? "" : "disabled"} onclick="compareSection('${id}')">⇄ 比較</button>
-      </div>
-      <div id="dictation-${id}" class="dictation hidden"></div>
-    `;
-    c.appendChild(card);
-  });
-
-  Object.keys(saved).forEach(id => {
-    const d = $("dictation-" + id);
-    if (!d) return;
-    d.innerHTML = saved[id].html;
-    d.classList.remove("hidden");
-    const ta = $("dictation-input-" + id);
-    if (ta) ta.value = saved[id].value;
-  });
-}
-
-/* ========== セクション時間 ========== */
-function setSectionTime(id) {
-  if (!playerReady) return;
-  const section = sections.find(s => s.id === id);
-  if (!section) return;
-  const cur = player.getCurrentTime();
-
-  if (section.start === null) {
-    section.start = cur;
-  } else if (section.end === null) {
-    section.end = cur;
-  } else {
-    const ans = confirm("開始時間を現在位置に変更しますか？\n\n「キャンセル」を押すと終了時間を変更します。");
-    if (ans) section.start = cur; else section.end = cur;
-  }
-  saveCurrentVideo();
-  renderSections();
-}
-
-function playSection(id) {
-  if (!playerReady) return;
-  const section = sections.find(s => s.id === id);
-  if (!section) return;
-  if (section.start === null) { alert("開始時間を設定してください。"); return; }
-  compareId = null;
-  stopAudio();
-  player.seekTo(section.start, true);
-  player.playVideo();
-}
-
-function toggleSectionRepeat(id) {
-  const section = sections.find(s => s.id === id);
-  if (!section) return;
-  if (section.start === null || section.end === null) {
-    alert("開始時間と終了時間を設定してください。");
-    return;
-  }
-  section.repeat = !section.repeat;
-  saveCurrentVideo();
-  renderSections();
-}
-
-function deleteSection(id) {
-  if (!confirm("このセクションを削除しますか？\n録音も削除されます。")) return;
-  sections = sections.filter(s => s.id !== id);
-  delete dictationAnswers[id];
-  delete recBlobs[id];
-  idbDel(id).catch(() => {});
-  saveCurrentVideo();
-  renderSections();
-}
-
-/* ========== 録音 ========== */
-function stopAudio() {
-  if (curAudio) { curAudio.pause(); curAudio = null; }
-}
-
-async function toggleRecord(id) {
-  if (recordingId === id && mediaRecorder) { mediaRecorder.stop(); return; }
-  if (recordingId) { alert("別のセクションを録音中です。"); return; }
-  if (!navigator.mediaDevices || !window.MediaRecorder) {
-    alert("このブラウザでは録音できません。");
-    return;
-  }
-  try {
-    compareId = null;
-    stopAudio();
-    pauseVideo();
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const rec = new MediaRecorder(stream);
-    recChunks = [];
-    rec.ondataavailable = e => { if (e.data && e.data.size) recChunks.push(e.data); };
-    rec.onstop = async function () {
-      stream.getTracks().forEach(t => t.stop());
-      const blob = new Blob(recChunks, { type: rec.mimeType || "audio/mp4" });
-      recordingId = null;
-      mediaRecorder = null;
-      if (blob.size) {
-        recBlobs[id] = blob;
-        try { await idbPut(id, blob); } catch (e) { console.log(e); }
-      }
-      renderSections();
-    };
-    rec.start();
-    mediaRecorder = rec;
-    recordingId = id;
-    renderSections();
-  } catch (e) {
-    recordingId = null;
-    mediaRecorder = null;
-    alert("マイクを使えませんでした。Safariのマイク許可と、https で開いているかを確認してください。");
-  }
-}
-
-function makeAudio(id) {
-  const blob = recBlobs[id];
-  if (!blob) return null;
-  const url = URL.createObjectURL(blob);
-  const a = new Audio(url);
-  a.onended = () => URL.revokeObjectURL(url);
-  return a;
-}
-
-function playRecording(id, fromCompare) {
-  if (!recBlobs[id]) { alert("録音がありません。"); return; }
-  if (!fromCompare) {
-    compareId = null;
-    pauseVideo();
-    stopAudio();
-    curAudio = makeAudio(id);
-  }
-  if (!curAudio) curAudio = makeAudio(id);
-  curAudio.currentTime = 0;
-  curAudio.play().catch(() => alert("再生できませんでした。「▶ 自分」を押してください。"));
-}
-
-function compareSection(id) {
-  const s = sections.find(x => x.id === id);
-  if (!playerReady || !s || s.start === null || s.end === null) {
-    alert("開始時間と終了時間を設定してください。");
-    return;
-  }
-  if (!recBlobs[id]) { alert("先に録音してください。"); return; }
-  stopAudio();
-  // iPhoneでは、タップ中に音声を準備しておくと後から自動再生できる
-  curAudio = makeAudio(id);
-  curAudio.muted = true;
-  curAudio.play().then(() => {
-    curAudio.pause();
-    curAudio.currentTime = 0;
-    curAudio.muted = false;
-  }).catch(() => { if (curAudio) curAudio.muted = false; });
-  compareId = id;
-  player.seekTo(s.start, true);
-  player.playVideo();
-}
-
-/* ========== ディクテーション ========== */
-function openDictation(id) {
-  const section = sections.find(s => s.id === id);
-  if (!section) return;
-  const c = $("dictation-" + id);
-  if (!c) return;
-
-  // この時点では正解をDOMに出さない
-  c.innerHTML = `
-    <h3>📝 ディクテーション</h3>
-    <p class="muted">動画を何度も聞いて、聞こえた英文を入力してください。</p>
-    <textarea id="dictation-input-${id}" placeholder="ここに聞き取った英文を入力"></textarea>
-    <div class="grid2"><button onclick="submitDictation('${id}')">回答を確定</button></div>
-    <div id="dictation-result-${id}" class="dictation-result"></div>
-  `;
-  c.classList.remove("hidden");
-}
-
-function submitDictation(id) {
-  const input = $("dictation-input-" + id);
-  const result = $("dictation-result-" + id);
-  if (!input || !result) return;
-  const userAnswer = input.value.trim();
-  if (!userAnswer) { alert("回答を入力してください。"); return; }
-
-  // 回答はHTMLに埋め込まず、変数に保存する
-  dictationAnswers[id] = userAnswer;
-
-  result.innerHTML = `
-    <p>回答を受け付けました。</p>
-    <div class="grid2"><button onclick="revealDictationAnswer('${id}')">正解を表示</button></div>
-  `;
-}
-
-function revealDictationAnswer(id) {
-  const section = sections.find(s => s.id === id);
-  const result = $("dictation-result-" + id);
-  if (!section || !result) return;
-
-  const userAnswer = dictationAnswers[id] || "";
-  const answer = getSectionAnswer(section);
-  const isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(answer);
-
-  result.innerHTML = `
-    <div class="answer-box"><strong>あなたの回答</strong><div>${escapeHtml(userAnswer)}</div></div>
-    <div class="answer-box" style="margin-top:10px"><strong>正解</strong><div>${escapeHtml(answer)}</div></div>
-    <p>${isCorrect
-      ? "🎉 完全一致です。"
-      : "もう一度、音声を聞いて正解と自分の回答を比較してみましょう。"}</p>
-  `;
-}
-
-function normalizeAnswer(text) {
-  return text
-    .toLowerCase()
-    .replace(/[-–—]/g, " ")
-    .replace(/[.,!?;:'"“”‘’…()]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-/* ========== 保存 ========== */
-function saveCurrentVideo() {
-  if (!currentVideoId) return;
-  const v = getVideos();
-  const d = v[currentVideoId] || (v[currentVideoId] = {
-    id: currentVideoId, title: currentVideoTitle || "",
-    url: $("videoUrl").value, script: "", scriptSentences: [], sections: []
-  });
-  if (currentVideoTitle) d.title = currentVideoTitle;
-  d.scriptSentences = scriptSentences;
-  d.sections = sections;
-  saveVideos(v);
-}
-
-/* ========== ライブラリ ========== */
-function showLibrary() {
-  renderLibrary();
-  $("mainView").classList.add("hidden");
-  $("libraryView").classList.remove("hidden");
-  window.scrollTo(0, 0);
-}
-function closeLibrary() {
-  $("libraryView").classList.add("hidden");
-  $("mainView").classList.remove("hidden");
-}
-
-function renderLibrary() {
-  const c = $("libraryList");
-  c.innerHTML = "";
-  const list = Object.values(getVideos()).reverse();
-  if (!list.length) {
-    c.innerHTML = `<div class="card"><p class="muted">まだ動画が登録されていません。</p></div>`;
-    return;
-  }
-  list.forEach(video => {
-    const item = document.createElement("div");
-    item.className = "library-item";
-    item.innerHTML = `
-      <div class="library-title">${escapeHtml(video.title || "タイトル未取得")}</div>
-      <div class="library-url">${escapeHtml(video.url || "")}</div>
-      <div class="grid2">
-        <button onclick="openSavedVideo('${video.id}')">開く</button>
-        <button class="tonal" style="color:var(--red)" onclick="deleteSavedVideo('${video.id}')">削除</button>
-      </div>
-    `;
-    c.appendChild(item);
-  });
-}
-
-function openSavedVideo(id) {
-  const data = getVideos()[id];
-  if (!data) return;
-  currentVideoId = data.id;
-  currentVideoTitle = data.title || "";
-  $("videoUrl").value = data.url || `https://www.youtube.com/watch?v=${id}`;
-  $("videoTitle").textContent = currentVideoTitle;
-  $("scriptInput").value = data.script || "";
-  scriptSentences = data.scriptSentences || [];
-  sections = data.sections || [];
-  compareId = null;
-  stopAudio();
-  resetAB();
-  renderSentenceList();
-  renderSections();
-  closeLibrary();
-  loadIntoPlayer(id);
-}
-
-function deleteSavedVideo(id) {
-  if (!confirm("この動画の保存データを削除しますか？\nスクリプト・セクション・録音も削除されます。")) return;
-  const videos = getVideos();
-  (videos[id] && videos[id].sections || []).forEach(s => {
-    delete recBlobs[s.id];
-    idbDel(s.id).catch(() => {});
-  });
-  delete videos[id];
-  saveVideos(videos);
-
-  if (currentVideoId === id) {
-    currentVideoId = null;
-    currentVideoTitle = "";
-    sections = [];
-    scriptSentences = [];
-    compareId = null;
-    stopAudio();
-    $("videoUrl").value = "";
-    $("videoTitle").textContent = "";
-    $("scriptInput").value = "";
-    renderSentenceList();
-    renderSections();
-    resetAB();
-    if (playerReady) player.stopVideo();
-  }
-  renderLibrary();
-}
-
-/* ========== Utils ========== */
-function formatTime(seconds) {
-  if (seconds === null || seconds === undefined || isNaN(seconds)) return "-";
-  seconds = Math.max(0, Math.floor(seconds));
-  return Math.floor(seconds / 60) + ":" + String(seconds % 60).padStart(2, "0");
-}
-
-function escapeHtml(text) {
-  return String(text)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-/* ========== 初期表示 ========== */
-renderSentenceList();
-renderSections();
-(async function loadRecordings() {
-  try {
-    const keys = await idbKeys();
-    for (const k of keys) recBlobs[k] = await idbGet(k);
-    renderSections();
-  } catch (e) {}
-})();
-</script>
+<!-- =====================================================
+     YouTube API
+     ★ ここだけで1回
+===================================================== -->
 
 <script src="https://www.youtube.com/iframe_api"></script>
+
+
+<script>
+
+/* =========================================================
+   状態
+========================================================= */
+
+let player = null;
+let playerReady = false;
+let pendingId = null;
+
+let currentVideoId = null;
+let currentVideoTitle = "";
+
+let aPoint = null;
+let bPoint = null;
+let repeatEnabled = false;
+
+let duration = 0;
+let isSeeking = false;
+
+let sections = [];
+let scriptSentences = [];
+
+const dictationAnswers = {};
+
+const STORAGE_KEY =
+  "englishTrainerVideos";
+
+
+/* =========================================================
+   録音
+========================================================= */
+
+const recBlobs = {};
+
+let mediaRecorder = null;
+let recordingId = null;
+let recChunks = [];
+
+let curAudio = null;
+let compareId = null;
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* =========================================================
+   IndexedDB
+========================================================= */
+
+function idbOpen(){
+
+  return new Promise((resolve,reject)=>{
+
+    const request =
+      indexedDB.open(
+        "englishTrainerRec",
+        1
+      );
+
+    request.onupgradeneeded =
+      () => {
+
+        if(
+          !request.result.objectStoreNames.contains("rec")
+        ){
+
+          request.result.createObjectStore("rec");
+
+        }
+
+      };
+
+    request.onsuccess =
+      () => resolve(request.result);
+
+    request.onerror =
+      () => reject(request.error);
+
+  });
+
+}
+
+
+async function idbPut(key,value){
+
+  const db =
+    await idbOpen();
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const tx =
+        db.transaction(
+          "rec",
+          "readwrite"
+        );
+
+      tx.objectStore("rec")
+        .put(value,key);
+
+      tx.oncomplete =
+        () => resolve();
+
+      tx.onerror =
+        () => reject(tx.error);
+
+    }
+  );
+
+}
+
+
+async function idbGet(key){
+
+  const db =
+    await idbOpen();
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const tx =
+        db.transaction(
+          "rec",
+          "readonly"
+        );
+
+      const request =
+        tx.objectStore("rec")
+          .get(key);
+
+      request.onsuccess =
+        () => resolve(request.result);
+
+      request.onerror =
+        () => reject(request.error);
+
+    }
+  );
+
+}
+
+
+async function idbDelete(key){
+
+  const db =
+    await idbOpen();
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const tx =
+        db.transaction(
+          "rec",
+          "readwrite"
+        );
+
+      tx.objectStore("rec")
+        .delete(key);
+
+      tx.oncomplete =
+        () => resolve();
+
+      tx.onerror =
+        () => reject(tx.error);
+
+    }
+  );
+
+}
+
+
+async function idbKeys(){
+
+  const db =
+    await idbOpen();
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const tx =
+        db.transaction(
+          "rec",
+          "readonly"
+        );
+
+      const request =
+        tx.objectStore("rec")
+          .getAllKeys();
+
+      request.onsuccess =
+        () => resolve(request.result);
+
+      request.onerror =
+        () => reject(request.error);
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   YouTube
+========================================================= */
+
+function onYouTubeIframeAPIReady(){
+
+  createPlayer();
+
+}
+
+
+function createPlayer(){
+
+  if(player) return;
+
+  player =
+    new YT.Player(
+      "player",
+      {
+
+        playerVars:{
+          playsinline:1,
+          rel:0
+        },
+
+        events:{
+
+          onReady:function(){
+
+            playerReady = true;
+
+            if(pendingId){
+
+              player.loadVideoById(
+                pendingId
+              );
+
+              pendingId = null;
+
+            }
+
+            updatePlayerInfo();
+
+          },
+
+          onStateChange:function(event){
+
+            updatePlayerInfo();
+
+            $("playBtn").textContent =
+              event.data === 1
+                ? "⏸"
+                : "▶";
+
+            if(event.data === 1){
+
+              changeSpeed();
+
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+}
+
+
+function loadIntoPlayer(id){
+
+  if(
+    playerReady &&
+    player &&
+    player.loadVideoById
+  ){
+
+    player.loadVideoById(id);
+
+  }else{
+
+    pendingId = id;
+
+  }
+
+}
+
+
+function extractVideoId(url){
+
+  if(!url) return null;
+
+  url =
+    url.trim();
+
+  if(
+    /^[\w-]{11}$/.test(url)
+  ){
+
+    return url;
+
+  }
+
+  try{
+
+    const u =
+      new URL(url);
+
+    const host =
+      u.hostname
+        .replace(/^www\./,"")
+        .replace(/^m\./,"");
+
+    if(host === "youtu.be"){
+
+      return (
+        u.pathname
+          .slice(1)
+          .split("/")[0]
+        || null
+      );
+
+    }
+
+    if(host.endsWith("youtube.com")){
+
+      const v =
+        u.searchParams.get("v");
+
+      if(v) return v;
+
+      const match =
+        u.pathname.match(
+          /^\/(?:shorts|embed|live)\/([\w-]+)/
+        );
+
+      if(match){
+
+        return match[1];
+
+      }
+
+    }
+
+  }catch(e){}
+
+  return null;
+
+}
+
+
+/* =========================================================
+   Storage
+========================================================= */
+
+function getVideos(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "{}"
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    return {};
+
+  }
+
+}
+
+
+function saveVideos(videos){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(videos)
+    );
+
+  }catch(e){
+
+    alert(
+      "保存に失敗しました。"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   動画
+========================================================= */
+
+function loadVideo(){
+
+  const url =
+    $("videoUrl")
+      .value
+      .trim();
+
+  const id =
+    extractVideoId(url);
+
+  if(!id){
+
+    alert(
+      "YouTube URLを確認してください。"
+    );
+
+    return;
+
+  }
+
+  currentVideoId = id;
+
+  const videos =
+    getVideos();
+
+  if(!videos[id]){
+
+    videos[id] = {
+
+      id:id,
+      title:"",
+      url:url,
+      script:"",
+      scriptSentences:[],
+      sections:[]
+
+    };
+
+  }else{
+
+    videos[id].url =
+      url;
+
+  }
+
+  saveVideos(videos);
+
+  resetAB();
+
+  loadCurrentVideoData();
+
+  loadIntoPlayer(id);
+
+}
+
+
+function loadCurrentVideoData(){
+
+  if(!currentVideoId)
+    return;
+
+  const data =
+    getVideos()[
+      currentVideoId
+    ];
+
+  if(!data)
+    return;
+
+  currentVideoTitle =
+    data.title || "";
+
+  $("videoUrl").value =
+    data.url ||
+    `https://www.youtube.com/watch?v=${currentVideoId}`;
+
+  $("videoTitle").textContent =
+    currentVideoTitle;
+
+  $("scriptInput").value =
+    data.script || "";
+
+  scriptSentences =
+    Array.isArray(
+      data.scriptSentences
+    )
+      ? data.scriptSentences
+      : [];
+
+  sections =
+    Array.isArray(
+      data.sections
+    )
+      ? data.sections
+      : [];
+
+  renderSentenceList();
+  renderSections();
+
+}
+
+
+function updatePlayerInfo(){
+
+  if(
+    !player ||
+    !player.getVideoData
+  )
+    return;
+
+  try{
+
+    const data =
+      player.getVideoData();
+
+    if(
+      !data ||
+      !data.video_id ||
+      data.video_id !== currentVideoId
+    )
+      return;
+
+    if(data.title){
+
+      currentVideoTitle =
+        data.title;
+
+      $("videoTitle")
+        .textContent =
+        data.title;
+
+      const videos =
+        getVideos();
+
+      if(
+        videos[currentVideoId]
+      ){
+
+        videos[currentVideoId]
+          .title =
+          data.title;
+
+        saveVideos(videos);
+
+      }
+
+    }
+
+  }catch(e){}
+
+}
+
+
+/* =========================================================
+   プレイヤー操作
+========================================================= */
+
+function playVideo(){
+
+  if(playerReady)
+    player.playVideo();
+
+}
+
+
+function pauseVideo(){
+
+  if(playerReady)
+    player.pauseVideo();
+
+}
+
+
+function togglePlay(){
+
+  if(!playerReady)
+    return;
+
+  compareId = null;
+
+  stopAudio();
+
+  if(
+    player.getPlayerState() === 1
+  ){
+
+    player.pauseVideo();
+
+  }else{
+
+    player.playVideo();
+
+  }
+
+}
+
+
+function rewindVideo(){
+
+  if(!playerReady)
+    return;
+
+  player.seekTo(
+    Math.max(
+      0,
+      player.getCurrentTime() - 5
+    ),
+    true
+  );
+
+}
+
+
+function seekVideo(value){
+
+  if(
+    !playerReady ||
+    duration <= 0
+  )
+    return;
+
+  player.seekTo(
+    Number(value) /
+      100 *
+      duration,
+    true
+  );
+
+}
+
+
+function changeSpeed(){
+
+  if(!playerReady)
+    return;
+
+  player.setPlaybackRate(
+    Number(
+      $("speedSelect").value
+    )
+  );
+
+}
+
+
+/* =========================================================
+   Seek
+========================================================= */
+
+$("seekBar")
+  .addEventListener(
+    "touchstart",
+    ()=>{
+      isSeeking = true;
+    },
+    {passive:true}
+  );
+
+$("seekBar")
+  .addEventListener(
+    "mousedown",
+    ()=>{
+      isSeeking = true;
+    }
+  );
+
+window.addEventListener(
+  "touchend",
+  ()=>{
+    isSeeking = false;
+  }
+);
+
+window.addEventListener(
+  "touchcancel",
+  ()=>{
+    isSeeking = false;
+  }
+);
+
+window.addEventListener(
+  "mouseup",
+  ()=>{
+    isSeeking = false;
+  }
+);
+
+
+/* =========================================================
+   A/B
+========================================================= */
+
+function setAPoint(){
+
+  if(!playerReady)
+    return;
+
+  aPoint =
+    player.getCurrentTime();
+
+  $("aPoint")
+    .textContent =
+    formatTime(aPoint);
+
+}
+
+
+function setBPoint(){
+
+  if(!playerReady)
+    return;
+
+  bPoint =
+    player.getCurrentTime();
+
+  $("bPoint")
+    .textContent =
+    formatTime(bPoint);
+
+}
+
+
+function toggleABRepeat(){
+
+  repeatEnabled =
+    !repeatEnabled;
+
+  $("repeatButton")
+    .textContent =
+      repeatEnabled
+        ? "🔁 リピートON"
+        : "🔁 リピートOFF";
+
+  $("repeatButton")
+    .classList.toggle(
+      "on",
+      repeatEnabled
+    );
+
+}
+
+
+function resetAB(){
+
+  aPoint = null;
+  bPoint = null;
+  repeatEnabled = false;
+
+  $("aPoint")
+    .textContent = "-";
+
+  $("bPoint")
+    .textContent = "-";
+
+  $("repeatButton")
+    .textContent =
+      "🔁 リピートOFF";
+
+  $("repeatButton")
+    .classList.remove("on");
+
+}
+
+
+/* =========================================================
+   タイマー
+========================================================= */
+
+setInterval(
+
+  function(){
+
+    if(
+      !playerReady ||
+      !player.getCurrentTime
+    )
+      return;
+
+    try{
+
+      const current =
+        player.getCurrentTime();
+
+      duration =
+        player.getDuration() || 0;
+
+      $("currentTime")
+        .textContent =
+        formatTime(current);
+
+      $("durationTime")
+        .textContent =
+        formatTime(duration);
+
+      if(
+        duration > 0 &&
+        !isSeeking
+      ){
+
+        $("seekBar").value =
+          current /
+          duration *
+          100;
+
+      }
+
+
+      /* 比較再生 */
+
+      if(compareId){
+
+        const section =
+          sections.find(
+            s =>
+              s.id === compareId
+          );
+
+        if(
+          !section ||
+          section.end === null
+        ){
+
+          compareId = null;
+
+        }else if(
+          current >=
+          section.end
+        ){
+
+          const id =
+            compareId;
+
+          compareId = null;
+
+          player.pauseVideo();
+
+          playRecording(
+            id,
+            true
+          );
+
+          return;
+
+        }
+
+      }
+
+
+      /* A/B */
+
+      if(
+        repeatEnabled &&
+        aPoint !== null &&
+        bPoint !== null &&
+        bPoint > aPoint &&
+        current >= bPoint
+      ){
+
+        player.seekTo(
+          aPoint,
+          true
+        );
+
+        return;
+
+      }
+
+
+      /* セクションリピート */
+
+      if(!compareId){
+
+        const section =
+          sections.find(
+            s =>
+              s.repeat &&
+              s.start !== null &&
+              s.end !== null &&
+              current >= s.end
+          );
+
+        if(section){
+
+          player.seekTo(
+            section.start,
+            true
+          );
+
+        }
+
+      }
+
+    }catch(e){}
+
+  },
+
+  200
+
+);
+
+
+/* =========================================================
+   スクリプト
+========================================================= */
+
+function saveScript(){
+
+  if(!currentVideoId){
+
+    alert(
+      "先に動画を読み込んでください。"
+    );
+
+    return;
+
+  }
+
+  const text =
+    $("scriptInput")
+      .value
+      .trim();
+
+  const next =
+    splitScript(text);
+
+
+  /* 既存IDを可能な限り維持 */
+
+  const pool = {};
+
+  scriptSentences.forEach(
+    sentence=>{
+
+      if(
+        !pool[sentence.text]
+      ){
+
+        pool[sentence.text] =
+          [];
+
+      }
+
+      pool[sentence.text]
+        .push(sentence.id);
+
+    }
+  );
+
+
+  next.forEach(
+    sentence=>{
+
+      const q =
+        pool[sentence.text];
+
+      if(
+        q &&
+        q.length
+      ){
+
+        sentence.id =
+          q.shift();
+
+      }
+
+    }
+  );
+
+
+  scriptSentences =
+    next;
+
+
+  /* 存在しなくなった文を
+     セクションから削除 */
+
+  const valid =
+    new Set(
+      next.map(
+        s => s.id
+      )
+    );
+
+  sections.forEach(
+    section=>{
+
+      if(
+        Array.isArray(
+          section.sentenceIds
+        )
+      ){
+
+        section.sentenceIds =
+          section.sentenceIds
+            .filter(
+              id =>
+                valid.has(id)
+            );
+
+      }
+
+    }
+  );
+
+
+  const videos =
+    getVideos();
+
+  if(
+    !videos[currentVideoId]
+  )
+    return;
+
+  videos[currentVideoId]
+    .script =
+    text;
+
+  videos[currentVideoId]
+    .scriptSentences =
+    scriptSentences;
+
+  videos[currentVideoId]
+    .sections =
+    sections;
+
+  saveVideos(videos);
+
+  renderSentenceList();
+  renderSections();
+
+  $("scriptStatus")
+    .textContent =
+      `${next.length}文に分割しました。`;
+
+}
+
+
+function splitScript(text){
+
+  if(!text.trim())
+    return [];
+
+  const lines =
+    text
+      .replace(/\r\n/g,"\n")
+      .split(/\n+/)
+      .map(
+        x=>x.trim()
+      )
+      .filter(Boolean);
+
+  const output = [];
+
+  lines.forEach(
+    line=>{
+
+      const matches =
+        line.match(
+          /[^.!?]+(?:[.!?]+["'”’)]*|$)/g
+        );
+
+      if(!matches){
+
+        output.push(line);
+
+        return;
+
+      }
+
+      matches.forEach(
+        sentence=>{
+
+          const clean =
+            sentence.trim();
+
+          if(clean){
+
+            output.push(
+              clean
+            );
+
+          }
+
+        }
+      );
+
+    }
+  );
+
+
+  return output.map(
+    (text,index)=>({
+
+      id:
+        `sentence_${Date.now()}_${index}_${Math.random()
+          .toString(36)
+          .slice(2,7)}`,
+
+      text:text
+
+    })
+  );
+
+}
+
+
+/* =========================================================
+   文一覧
+========================================================= */
+
+function renderSentenceList(){
+
+  const container =
+    $("sentenceList");
+
+  container.innerHTML = "";
+
+  if(
+    !scriptSentences.length
+  ){
+
+    container.innerHTML =
+      `<p class="muted">
+        まだスクリプトがありません。
+      </p>`;
+
+    return;
+
+  }
+
+  scriptSentences.forEach(
+    sentence=>{
+
+      const label =
+        document.createElement(
+          "label"
+        );
+
+      label.className =
+        "sentence-item";
+
+      label.innerHTML = `
+
+        <input
+          type="checkbox"
+          data-sentence-id="${escapeHtml(sentence.id)}"
+        >
+
+        <div class="sentence-text">
+          ${escapeHtml(sentence.text)}
+        </div>
+
+      `;
+
+      container.appendChild(
+        label
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   セクション作成
+========================================================= */
+
+function createSectionFromSelected(){
+
+  if(!currentVideoId){
+
+    alert(
+      "先に動画を読み込んでください。"
+    );
+
+    return;
+
+  }
+
+  const checked =
+    Array.from(
+      document.querySelectorAll(
+        "#sentenceList input[type=checkbox]:checked"
+      )
+    );
+
+  if(!checked.length){
+
+    alert(
+      "セクションにしたい文を選択してください。"
+    );
+
+    return;
+
+  }
+
+
+  const section = {
+
+    id:
+      `section_${Date.now()}_${Math.random()
+        .toString(36)
+        .slice(2,8)}`,
+
+    start:null,
+
+    end:null,
+
+    repeat:false,
+
+    answer:"",
+
+    sentenceIds:
+      checked.map(
+        checkbox =>
+          checkbox.dataset.sentenceId
+      )
+
+  };
+
+
+  sections.push(
+    section
+  );
+
+  saveCurrentVideo();
+
+  renderSections();
+
+
+  checked.forEach(
+    checkbox=>{
+      checkbox.checked =
+        false;
+    }
+  );
+
+
+  setTimeout(
+    ()=>{
+
+      const last =
+        document.querySelector(
+          "#sections .section-card:last-child"
+        );
+
+      if(last){
+
+        last.scrollIntoView({
+          behavior:"smooth",
+          block:"center"
+        });
+
+      }
+
+    },
+    100
+  );
+
+}
+
+
+function getSectionAnswer(section){
+
+  if(
+    Array.isArray(
+      section.sentenceIds
+    ) &&
+    section.sentenceIds.length
+  ){
+
+    return section.sentenceIds
+      .map(
+        id=>{
+
+          const sentence =
+            scriptSentences.find(
+              s =>
+                s.id === id
+            );
+
+          return sentence
+            ? sentence.text
+            : "";
+
+        }
+      )
+      .filter(Boolean)
+      .join(" ");
+
+  }
+
+  return section.answer || "";
+
+}
+
+
+/* =========================================================
+   セクション描画
+========================================================= */
+
+function renderSections(){
+
+  const container =
+    $("sections");
+
+  /*
+   * 現在開いているディクテーションの
+   * 入力値だけ保存
+   */
+
+  const openDictations = {};
+
+  container
+    .querySelectorAll(
+      ".dictation:not(.hidden)"
+    )
+    .forEach(
+      dictation=>{
+
+        const id =
+          dictation.id
+            .replace(
+              "dictation-",
+              ""
+            );
+
+        const textarea =
+          dictation.querySelector(
+            "textarea"
+          );
+
+        openDictations[id] = {
+
+          html:
+            dictation.innerHTML,
+
+          value:
+            textarea
+              ? textarea.value
+              : ""
+
+        };
+
+      }
+    );
+
+
+  container.innerHTML = "";
+
+
+  if(!sections.length){
+
+    container.innerHTML =
+      `<div class="card">
+        <p class="muted">
+          まだセクションがありません。
+        </p>
+      </div>`;
+
+    return;
+
+  }
+
+
+  sections.forEach(
+    (section,index)=>{
+
+      const id =
+        section.id;
+
+      const answer =
+        getSectionAnswer(
+          section
+        );
+
+      const startText =
+        section.start !== null
+          ? formatTime(
+              section.start
+            )
+          : "--:--";
+
+      const endText =
+        section.end !== null
+          ? formatTime(
+              section.end
+            )
+          : "--:--";
+
+      const timeLabel =
+        section.start === null
+          ? "⏱ 開始を設定"
+          : section.end === null
+            ? "⏱ 終了を設定"
+            : "⏱ 時間を変更";
+
+      const hasRecording =
+        !!recBlobs[id];
+
+      const recording =
+        recordingId === id;
+
+
+      const card =
+        document.createElement(
+          "div"
+        );
+
+      card.className =
+        "section-card";
+
+      /*
+       * ★ 重要
+       *
+       * onclickをHTMLに埋め込まない。
+       * data-action / data-idだけ付ける。
+       */
+
+      card.innerHTML = `
+
+        <div class="sec-head">
+
+          <h2>
+            Section ${index + 1}
+          </h2>
+
+          <button
+            class="icon-btn"
+            data-action="delete-section"
+            data-id="${escapeHtml(id)}"
+            aria-label="削除"
+          >
+            🗑
+          </button>
+
+        </div>
+
+
+        <div class="chips">
+
+          <span class="chip">
+            A ${startText}
+          </span>
+
+          <span class="chip">
+            B ${endText}
+          </span>
+
+        </div>
+
+
+        <div class="section-answer">
+
+          ${escapeHtml(answer)}
+
+        </div>
+
+
+        <div class="grid2">
+
+          <button
+            data-action="play-section"
+            data-id="${escapeHtml(id)}"
+          >
+            ▶ 再生
+          </button>
+
+
+          <button
+            class="tonal ${section.repeat ? "on" : ""}"
+            data-action="toggle-repeat"
+            data-id="${escapeHtml(id)}"
+          >
+            🔁 リピート${section.repeat ? "ON" : "OFF"}
+          </button>
+
+
+          <button
+            class="tonal"
+            data-action="set-section-time"
+            data-id="${escapeHtml(id)}"
+          >
+            ${timeLabel}
+          </button>
+
+
+          <button
+            class="tonal"
+            data-action="open-dictation"
+            data-id="${escapeHtml(id)}"
+          >
+            📝 ディクテーション
+          </button>
+
+        </div>
+
+
+        <div class="label">
+          発音練習
+        </div>
+
+
+        <div class="grid3">
+
+          <button
+            class="rec ${recording ? "on" : ""}"
+            data-action="toggle-record"
+            data-id="${escapeHtml(id)}"
+          >
+            ${recording ? "⏹ 停止" : "🎙 録音"}
+          </button>
+
+
+          <button
+            class="tonal"
+            data-action="play-recording"
+            data-id="${escapeHtml(id)}"
+            ${hasRecording ? "" : "disabled"}
+          >
+            ▶ 自分
+          </button>
+
+
+          <button
+            class="tonal"
+            data-action="compare-section"
+            data-id="${escapeHtml(id)}"
+            ${hasRecording ? "" : "disabled"}
+          >
+            ⇄ 比較
+          </button>
+
+        </div>
+
+
+        <div
+          id="dictation-${escapeHtml(id)}"
+          class="dictation hidden"
+        ></div>
+
+      `;
+
+
+      container.appendChild(
+        card
+      );
+
+    }
+  );
+
+
+  /*
+   * 開いていたディクテーションを復元
+   */
+
+  Object.keys(
+    openDictations
+  ).forEach(
+    id=>{
+
+      const dictation =
+        $(
+          "dictation-" + id
+        );
+
+      if(!dictation)
+        return;
+
+      dictation.innerHTML =
+        openDictations[id].html;
+
+      dictation.classList
+        .remove("hidden");
+
+      const textarea =
+        $(
+          "dictation-input-" + id
+        );
+
+      if(textarea){
+
+        textarea.value =
+          openDictations[id].value;
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   ★ セクションイベント委譲
+========================================================= */
+
+$("sections")
+  .addEventListener(
+    "click",
+    async function(event){
+
+      const button =
+        event.target.closest(
+          "button[data-action]"
+        );
+
+      if(
+        !button ||
+        !this.contains(button)
+      )
+        return;
+
+
+      const action =
+        button.dataset.action;
+
+      const id =
+        button.dataset.id;
+
+
+      /*
+       * disabledボタンは何もしない
+       */
+
+      if(button.disabled)
+        return;
+
+
+      switch(action){
+
+        case "delete-section":
+
+          deleteSection(id);
+
+          break;
+
+
+        case "play-section":
+
+          playSection(id);
+
+          break;
+
+
+        case "toggle-repeat":
+
+          toggleSectionRepeat(id);
+
+          break;
+
+
+        case "set-section-time":
+
+          setSectionTime(id);
+
+          break;
+
+
+        case "open-dictation":
+
+          openDictation(id);
+
+          break;
+
+
+        case "toggle-record":
+
+          await toggleRecord(id);
+
+          break;
+
+
+        case "play-recording":
+
+          playRecording(id);
+
+          break;
+
+
+        case "compare-section":
+
+          compareSection(id);
+
+          break;
+
+      }
+
+    }
+  );
+
+
+/* =========================================================
+   セクション時間
+========================================================= */
+
+function setSectionTime(id){
+
+  if(!playerReady){
+
+    alert(
+      "動画を読み込んでください。"
+    );
+
+    return;
+
+  }
+
+  const section =
+    sections.find(
+      s =>
+        s.id === id
+    );
+
+  if(!section)
+    return;
+
+  const current =
+    player.getCurrentTime();
+
+
+  if(section.start === null){
+
+    section.start =
+      current;
+
+  }else if(
+    section.end === null
+  ){
+
+    section.end =
+      current;
+
+  }else{
+
+    const changeStart =
+      confirm(
+        "開始時間を現在位置に変更しますか？\n\n" +
+        "「キャンセル」を押すと終了時間を変更します。"
+      );
+
+    if(changeStart){
+
+      section.start =
+        current;
+
+    }else{
+
+      section.end =
+        current;
+
+    }
+
+  }
+
+
+  /*
+   * A > Bになった場合は入れ替え
+   */
+
+  if(
+    section.start !== null &&
+    section.end !== null &&
+    section.end < section.start
+  ){
+
+    const temp =
+      section.start;
+
+    section.start =
+      section.end;
+
+    section.end =
+      temp;
+
+  }
+
+
+  saveCurrentVideo();
+
+  renderSections();
+
+}
+
+
+function playSection(id){
+
+  if(!playerReady){
+
+    alert(
+      "動画を読み込んでください。"
+    );
+
+    return;
+
+  }
+
+  const section =
+    sections.find(
+      s =>
+        s.id === id
+    );
+
+  if(!section)
+    return;
+
+  if(section.start === null){
+
+    alert(
+      "開始時間を設定してください。"
+    );
+
+    return;
+
+  }
+
+  compareId = null;
+
+  stopAudio();
+
+  player.seekTo(
+    section.start,
+    true
+  );
+
+  player.playVideo();
+
+}
+
+
+function toggleSectionRepeat(id){
+
+  const section =
+    sections.find(
+      s =>
+        s.id === id
+    );
+
+  if(!section)
+    return;
+
+  if(
+    section.start === null ||
+    section.end === null
+  ){
+
+    alert(
+      "開始時間と終了時間を設定してください。"
+    );
+
+    return;
+
+  }
+
+  section.repeat =
+    !section.repeat;
+
+  saveCurrentVideo();
+
+  renderSections();
+
+}
+
+
+async function deleteSection(id){
+
+  const section =
+    sections.find(
+      s =>
+        s.id === id
+    );
+
+  if(!section)
+    return;
+
+
+  if(
+    !confirm(
+      "このセクションを削除しますか？\n" +
+      "録音も削除されます。"
+    )
+  )
+    return;
+
+
+  /*
+   * 録音停止
+   */
+
+  if(
+    recordingId === id &&
+    mediaRecorder
+  ){
+
+    mediaRecorder.stop();
+
+  }
+
+
+  sections =
+    sections.filter(
+      s =>
+        s.id !== id
+    );
+
+
+  delete dictationAnswers[id];
+
+  delete recBlobs[id];
+
+
+  try{
+
+    await idbDelete(id);
+
+  }catch(e){
+
+    console.log(
+      "録音データ削除失敗",
+      e
+    );
+
+  }
+
+
+  saveCurrentVideo();
+
+  renderSections();
+
+}
+
+
+/* =========================================================
+   録音
+========================================================= */
+
+function stopAudio(){
+
+  if(curAudio){
+
+    try{
+      curAudio.pause();
+    }catch(e){}
+
+    curAudio = null;
+
+  }
+
+}
+
+
+async function toggleRecord(id){
+
+  /*
+   * 現在録音中なら停止
+   */
+
+  if(
+    recordingId === id &&
+    mediaRecorder
+  ){
+
+    mediaRecorder.stop();
+
+    return;
+
+  }
+
+
+  /*
+   * 他の録音中
+   */
+
+  if(recordingId){
+
+    alert(
+      "別のセクションを録音中です。"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !navigator.mediaDevices ||
+    !window.MediaRecorder
+  ){
+
+    alert(
+      "このブラウザでは録音できません。"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    compareId = null;
+
+    stopAudio();
+
+    pauseVideo();
+
+
+    const stream =
+      await navigator
+        .mediaDevices
+        .getUserMedia({
+          audio:true
+        });
+
+
+    const recorder =
+      new MediaRecorder(
+        stream
+      );
+
+
+    recChunks = [];
+
+
+    recorder.ondataavailable =
+      event=>{
+
+        if(
+          event.data &&
+          event.data.size
+        ){
+
+          recChunks.push(
+            event.data
+          );
+
+        }
+
+      };
+
+
+    recorder.onstop =
+      async ()=>{
+
+        stream
+          .getTracks()
+          .forEach(
+            track =>
+              track.stop()
+          );
+
+
+        const blob =
+          new Blob(
+            recChunks,
+            {
+              type:
+                recorder.mimeType ||
+                "audio/mp4"
+            }
+          );
+
+
+        recordingId = null;
+        mediaRecorder = null;
+
+
+        if(blob.size){
+
+          recBlobs[id] =
+            blob;
+
+          try{
+
+            await idbPut(
+              id,
+              blob
+            );
+
+          }catch(e){
+
+            console.log(
+              e
+            );
+
+          }
+
+        }
+
+
+        renderSections();
+
+      };
+
+
+    recorder.start();
+
+
+    mediaRecorder =
+      recorder;
+
+    recordingId =
+      id;
+
+
+    renderSections();
+
+  }catch(e){
+
+    console.error(e);
+
+    recordingId = null;
+    mediaRecorder = null;
+
+    alert(
+      "マイクを使えませんでした。\n\n" +
+      "Safariのマイク許可と、httpsで開いているかを確認してください。"
+    );
+
+  }
+
+}
+
+
+function makeAudio(id){
+
+  const blob =
+    recBlobs[id];
+
+  if(!blob)
+    return null;
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+  const audio =
+    new Audio(url);
+
+  audio.onended =
+    ()=>{
+      URL.revokeObjectURL(
+        url
+      );
+    };
+
+  return audio;
+
+}
+
+
+function playRecording(
+  id,
+  fromCompare = false
+){
+
+  if(
+    !recBlobs[id]
+  ){
+
+    alert(
+      "録音がありません。"
+    );
+
+    return;
+
+  }
+
+
+  if(!fromCompare){
+
+    compareId = null;
+
+    pauseVideo();
+
+    stopAudio();
+
+    curAudio =
+      makeAudio(id);
+
+  }
+
+
+  if(!curAudio){
+
+    curAudio =
+      makeAudio(id);
+
+  }
+
+
+  if(!curAudio)
+    return;
+
+
+  curAudio.currentTime =
+    0;
+
+
+  curAudio
+    .play()
+    .catch(
+      ()=>{
+        alert(
+          "再生できませんでした。"
+        );
+      }
+    );
+
+}
+
+
+function compareSection(id){
+
+  const section =
+    sections.find(
+      s =>
+        s.id === id
+    );
+
+  if(
+    !playerReady ||
+    !section
+  ){
+
+    alert(
+      "動画を読み込んでください。"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    section.start === null ||
+    section.end === null
+  ){
+
+    alert(
+      "開始時間と終了時間を設定してください。"
+    );
+
+    return;
+
+  }
+
+
+  if(
+    !recBlobs[id]
+  ){
+
+    alert(
+      "先に録音してください。"
+    );
+
+    return;
+
+  }
+
+
+  stopAudio();
+
+
+  curAudio =
+    makeAudio(id);
+
+
+  if(curAudio){
+
+    curAudio.muted =
+      true;
+
+    curAudio
+      .play()
+      .then(
+        ()=>{
+          curAudio.pause();
+          curAudio.currentTime = 0;
+          curAudio.muted = false;
+        }
+      )
+      .catch(
+        ()=>{
+          if(curAudio)
+            curAudio.muted = false;
+        }
+      );
+
+  }
+
+
+  compareId =
+    id;
+
+
+  player.seekTo(
+    section.start,
+    true
+  );
+
+  player.playVideo();
+
+}
+
+
+/* =========================================================
+   ディクテーション
+========================================================= */
+
+function openDictation(id){
+
+  const section =
+    sections.find(
+      s =>
+        s.id === id
+    );
+
+  if(!section)
+    return;
+
+
+  const container =
+    $(
+      "dictation-" + id
+    );
+
+  if(!container)
+    return;
+
+
+  /*
+   * ★ 正解文はここではDOMに入れない
+   */
+
+  container.innerHTML = `
+
+    <h3>
+      📝 ディクテーション
+    </h3>
+
+    <p class="muted">
+      動画を何度も聞いて、
+      聞こえた英文を入力してください。
+    </p>
+
+    <textarea
+      id="dictation-input-${escapeHtml(id)}"
+      placeholder="ここに聞き取った英文を入力"
+    ></textarea>
+
+    <div class="grid2">
+
+      <button
+        data-dictation-action="submit"
+        data-id="${escapeHtml(id)}"
+      >
+        回答を確定
+      </button>
+
+    </div>
+
+    <div
+      id="dictation-result-${escapeHtml(id)}"
+      class="dictation-result"
+    ></div>
+
+  `;
+
+
+  container
+    .classList
+    .remove("hidden");
+
+}
+
+
+/*
+ * ディクテーション内部イベント
+ */
+
+$("sections")
+  .addEventListener(
+    "click",
+    function(event){
+
+      const button =
+        event.target.closest(
+          "button[data-dictation-action]"
+        );
+
+      if(
+        !button
+      )
+        return;
+
+
+      const id =
+        button.dataset.id;
+
+      const action =
+        button.dataset
+          .dictationAction;
+
+
+      if(
+        action === "submit"
+      ){
+
+        submitDictation(
+          id
+        );
+
+        return;
+
+      }
+
+
+      if(
+        action === "reveal"
+      ){
+
+        revealDictationAnswer(
+          id
+        );
+
+      }
+
+    }
+  );
+
+
+function submitDictation(id){
+
+  const input =
+    $(
+      "dictation-input-" + id
+    );
+
+  const result =
+    $(
+      "dictation-result-" + id
+    );
+
+  if(
+    !input ||
+    !result
+  )
+    return;
+
+
+  const userAnswer =
+    input.value.trim();
+
+
+  if(!userAnswer){
+
+    alert(
+      "回答を入力してください。"
+    );
+
+    return;
+
+  }
+
+
+  /*
+   * 正解は保存せず、
+   * ユーザー回答だけ保存。
+   */
+
+  dictationAnswers[id] =
+    userAnswer;
+
+
+  result.innerHTML = `
+
+    <p>
+      回答を受け付けました。
+    </p>
+
+    <div class="grid2">
+
+      <button
+        data-dictation-action="reveal"
+        data-id="${escapeHtml(id)}"
+      >
+        正解を表示
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+function revealDictationAnswer(id){
+
+  const section =
+    sections.find(
+      s =>
+        s.id === id
+    );
+
+  const result =
+    $(
+      "dictation-result-" + id
+    );
+
+  if(
+    !section ||
+    !result
+  )
+    return;
+
+
+  const userAnswer =
+    dictationAnswers[id] || "";
+
+  const answer =
+    getSectionAnswer(
+      section
+    );
+
+
+  const correct =
+    normalizeAnswer(
+      userAnswer
+    ) ===
+    normalizeAnswer(
+      answer
+    );
+
+
+  result.innerHTML = `
+
+    <div class="answer-box">
+
+      <strong>
+        あなたの回答
+      </strong>
+
+      <div>
+        ${escapeHtml(userAnswer)}
+      </div>
+
+    </div>
+
+
+    <div
+      class="answer-box"
+      style="margin-top:10px"
+    >
+
+      <strong>
+        正解
+      </strong>
+
+      <div>
+        ${escapeHtml(answer)}
+      </div>
+
+    </div>
+
+
+    <p>
+      ${
+        correct
+          ? "🎉 完全一致です。"
+          : "もう一度音声を聞いて、正解と自分の回答を比較してみましょう。"
+      }
+    </p>
+
+  `;
+
+}
+
+
+function normalizeAnswer(text){
+
+  return text
+
+    .toLowerCase()
+
+    .replace(
+      /[-–—]/g,
+      " "
+    )
+
+    .replace(
+      /[.,!?;:'"“”‘’…()]/g,
+      ""
+    )
+
+    .replace(
+      /\s+/g,
+      " "
+    )
+
+    .trim();
+
+}
+
+
+/* =========================================================
+   保存
+========================================================= */
+
+function saveCurrentVideo(){
+
+  if(!currentVideoId)
+    return;
+
+
+  const videos =
+    getVideos();
+
+
+  const data =
+    videos[currentVideoId] ||
+    {
+
+      id:
+        currentVideoId,
+
+      title:
+        currentVideoTitle || "",
+
+      url:
+        $("videoUrl").value,
+
+      script:"",
+
+      scriptSentences:[],
+
+      sections:[]
+
+    };
+
+
+  if(currentVideoTitle){
+
+    data.title =
+      currentVideoTitle;
+
+  }
+
+
+  data.url =
+    $("videoUrl").value;
+
+  data.script =
+    $("scriptInput").value;
+
+  data.scriptSentences =
+    scriptSentences;
+
+  data.sections =
+    sections;
+
+
+  videos[currentVideoId] =
+    data;
+
+
+  saveVideos(
+    videos
+  );
+
+}
+
+
+/* =========================================================
+   ライブラリ
+========================================================= */
+
+function showLibrary(){
+
+  renderLibrary();
+
+  $("mainView")
+    .classList
+    .add("hidden");
+
+  $("libraryView")
+    .classList
+    .remove("hidden");
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+}
+
+
+function closeLibrary(){
+
+  $("libraryView")
+    .classList
+    .add("hidden");
+
+  $("mainView")
+    .classList
+    .remove("hidden");
+
+}
+
+
+function renderLibrary(){
+
+  const container =
+    $("libraryList");
+
+  container.innerHTML = "";
+
+
+  const list =
+    Object.values(
+      getVideos()
+    ).reverse();
+
+
+  if(!list.length){
+
+    container.innerHTML =
+      `<div class="card">
+        <p class="muted">
+          まだ動画が登録されていません。
+        </p>
+      </div>`;
+
+    return;
+
+  }
+
+
+  list.forEach(
+    video=>{
+
+      const item =
+        document.createElement(
+          "div"
+        );
+
+      item.className =
+        "library-item";
+
+
+      item.innerHTML = `
+
+        <div class="library-title">
+
+          ${escapeHtml(
+            video.title ||
+            "タイトル未取得"
+          )}
+
+        </div>
+
+
+        <div class="library-url">
+
+          ${escapeHtml(
+            video.url || ""
+          )}
+
+        </div>
+
+
+        <div class="grid2">
+
+          <button
+            data-library-action="open"
+            data-id="${escapeHtml(video.id)}"
+          >
+            開く
+          </button>
+
+
+          <button
+            class="tonal"
+            style="color:var(--red)"
+            data-library-action="delete"
+            data-id="${escapeHtml(video.id)}"
+          >
+            削除
+          </button>
+
+        </div>
+
+      `;
+
+
+      container.appendChild(
+        item
+      );
+
+    }
+  );
+
+}
+
+
+/* ライブラリイベント */
+
+$("libraryList")
+  .addEventListener(
+    "click",
+    function(event){
+
+      const button =
+        event.target.closest(
+          "button[data-library-action]"
+        );
+
+      if(!button)
+        return;
+
+
+      const action =
+        button.dataset
+          .libraryAction;
+
+      const id =
+        button.dataset.id;
+
+
+      if(
+        action === "open"
+      ){
+
+        openSavedVideo(
+          id
+        );
+
+      }
+
+
+      if(
+        action === "delete"
+      ){
+
+        deleteSavedVideo(
+          id
+        );
+
+      }
+
+    }
+  );
+
+
+function openSavedVideo(id){
+
+  const data =
+    getVideos()[id];
+
+  if(!data)
+    return;
+
+
+  currentVideoId =
+    data.id;
+
+  currentVideoTitle =
+    data.title || "";
+
+
+  $("videoUrl").value =
+    data.url ||
+    `https://www.youtube.com/watch?v=${id}`;
+
+  $("videoTitle").textContent =
+    currentVideoTitle;
+
+  $("scriptInput").value =
+    data.script || "";
+
+
+  scriptSentences =
+    Array.isArray(
+      data.scriptSentences
+    )
+      ? data.scriptSentences
+      : [];
+
+
+  sections =
+    Array.isArray(
+      data.sections
+    )
+      ? data.sections
+      : [];
+
+
+  compareId = null;
+
+  stopAudio();
+
+  resetAB();
+
+  renderSentenceList();
+
+  renderSections();
+
+  closeLibrary();
+
+  loadIntoPlayer(
+    id
+  );
+
+}
+
+
+async function deleteSavedVideo(id){
+
+  if(
+    !confirm(
+      "この動画の保存データを削除しますか？\n" +
+      "スクリプト・セクション・録音も削除されます。"
+    )
+  )
+    return;
+
+
+  const videos =
+    getVideos();
+
+
+  const data =
+    videos[id];
+
+
+  if(data){
+
+    const savedSections =
+      Array.isArray(
+        data.sections
+      )
+        ? data.sections
+        : [];
+
+
+    for(
+      const section
+      of savedSections
+    ){
+
+      delete recBlobs[
+        section.id
+      ];
+
+      try{
+
+        await idbDelete(
+          section.id
+        );
+
+      }catch(e){}
+
+    }
+
+  }
+
+
+  delete videos[id];
+
+  saveVideos(
+    videos
+  );
+
+
+  if(
+    currentVideoId === id
+  ){
+
+    currentVideoId = null;
+
+    currentVideoTitle = "";
+
+    sections = [];
+
+    scriptSentences = [];
+
+    compareId = null;
+
+    stopAudio();
+
+
+    $("videoUrl")
+      .value = "";
+
+    $("videoTitle")
+      .textContent = "";
+
+    $("scriptInput")
+      .value = "";
+
+    renderSentenceList();
+
+    renderSections();
+
+    resetAB();
+
+
+    if(
+      playerReady
+    ){
+
+      player.stopVideo();
+
+    }
+
+  }
+
+
+  renderLibrary();
+
+}
+
+
+/* =========================================================
+   Utils
+========================================================= */
+
+function formatTime(seconds){
+
+  if(
+    seconds === null ||
+    seconds === undefined ||
+    isNaN(seconds)
+  ){
+
+    return "-";
+
+  }
+
+
+  seconds =
+    Math.max(
+      0,
+      Math.floor(seconds)
+    );
+
+
+  return (
+    Math.floor(
+      seconds / 60
+    ) +
+    ":" +
+    String(
+      seconds % 60
+    ).padStart(
+      2,
+      "0"
+    )
+  );
+
+}
+
+
+function escapeHtml(text){
+
+  return String(text)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   固定ボタンのイベント
+========================================================= */
+
+$("libraryBtn")
+  .addEventListener(
+    "click",
+    showLibrary
+  );
+
+
+$("closeLibraryBtn")
+  .addEventListener(
+    "click",
+    closeLibrary
+  );
+
+
+$("loadVideoBtn")
+  .addEventListener(
+    "click",
+    loadVideo
+  );
+
+
+$("saveScriptBtn")
+  .addEventListener(
+    "click",
+    saveScript
+  );
+
+
+$("createSectionBtn")
+  .addEventListener(
+    "click",
+    createSectionFromSelected
+  );
+
+
+$("setABtn")
+  .addEventListener(
+    "click",
+    setAPoint
+  );
+
+
+$("setBBtn")
+  .addEventListener(
+    "click",
+    setBPoint
+  );
+
+
+$("repeatButton")
+  .addEventListener(
+    "click",
+    toggleABRepeat
+  );
+
+
+$("resetABBtn")
+  .addEventListener(
+    "click",
+    resetAB
+  );
+
+
+$("rewindBtn")
+  .addEventListener(
+    "click",
+    rewindVideo
+  );
+
+
+$("playBtn")
+  .addEventListener(
+    "click",
+    togglePlay
+  );
+
+
+$("speedSelect")
+  .addEventListener(
+    "change",
+    changeSpeed
+  );
+
+
+$("seekBar")
+  .addEventListener(
+    "input",
+    event =>
+      seekVideo(
+        event.target.value
+      )
+  );
+
+
+/* =========================================================
+   初期化
+========================================================= */
+
+renderSentenceList();
+
+renderSections();
+
+
+/*
+ * 保存済み録音をIndexedDBから復元
+ */
+
+(async function(){
+
+  try{
+
+    const keys =
+      await idbKeys();
+
+
+    for(
+      const key
+      of keys
+    ){
+
+      const blob =
+        await idbGet(
+          key
+        );
+
+      if(blob){
+
+        recBlobs[key] =
+          blob;
+
+      }
+
+    }
+
+
+    renderSections();
+
+  }catch(e){
+
+    console.log(
+      "録音復元エラー",
+      e
+    );
+
+  }
+
+})();
+
+</script>
+
 </body>
 </html>
