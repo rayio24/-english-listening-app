@@ -2,2431 +2,870 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>English Listening Trainer</title>
-
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: #f5f5f5;
-  color: #222;
-}
-
-.container {
-  max-width: 700px;
-  margin: auto;
-  position: relative;
-}
-
-h1 {
-  font-size: 24px;
-}
-
-h2 {
-  font-size: 21px;
-}
-
-h3 {
-  margin-bottom: 10px;
-}
-
-button,
-input,
-textarea {
-  font-size: 16px;
-}
-
-button {
-  padding: 9px 13px;
-  margin: 3px;
-  border: none;
-  border-radius: 8px;
-  background: #222;
-  color: white;
-}
-
-button:active {
-  opacity: .7;
-}
-
-button.secondary {
-  background: #666;
-}
-
-button.danger {
-  background: #a33;
-}
-
-button.light {
-  background: #888;
-}
-
-input[type="text"],
-textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-textarea {
-  min-height: 140px;
-  resize: vertical;
-}
-
-#libraryButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
-
-#player {
-  margin-top: 15px;
-}
-
-.controls {
-  margin-top: 10px;
-}
-
-#seekBar {
-  width: 100%;
-}
-
-.time {
-  font-size: 14px;
-  color: #666;
-}
-
-.video-title {
-  color: #666;
-  font-size: 14px;
-  margin: -8px 0 12px;
-  padding-right: 150px;
-  min-height: 20px;
-}
-
-.panel,
-.section,
-.script-item,
-.library-item {
-  background: white;
-  border-radius: 12px;
-  padding: 15px;
-  margin-top: 12px;
-}
-
-.script-item {
-  border: 2px solid transparent;
-}
-
-.script-item.selected {
-  border-color: #222;
-}
-
-.script-number {
-  font-size: 13px;
-  color: #777;
-  margin-right: 5px;
-}
-
-.script-text {
-  line-height: 1.5;
-}
-
-.section-title {
-  font-weight: bold;
-  margin-bottom: 8px;
-}
-
-.small {
-  font-size: 13px;
-  color: #666;
-}
-
-.dictation {
-  margin-top: 12px;
-  padding: 12px;
-  background: #f0f0f0;
-  border-radius: 10px;
-}
-
-.answer {
-  display: none;
-  margin-top: 10px;
-  padding: 10px;
-  background: white;
-  border-radius: 8px;
-}
-
-.result {
-  display: none;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.correct {
-  background: #dff5df;
-}
-
-.incorrect {
-  background: #ffe0e0;
-}
-
-.library-item {
-  background: #f5f5f5;
-}
-
-.library-title {
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.library-url {
-  font-size: 12px;
-  color: #777;
-  word-break: break-all;
-  margin: 5px 0;
-}
-
-.badge {
-  display: inline-block;
-  font-size: 12px;
-  padding: 3px 7px;
-  border-radius: 6px;
-  background: #ddd;
-  margin-top: 5px;
-}
-
-.hidden {
-  display: none !important;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid #ddd;
-  margin: 25px 0;
-}
-
-.empty {
-  color: #777;
-  padding: 15px 0;
-}
-
-.time-setting {
-  margin-top: 10px;
-  padding: 10px;
-  background: #f5f5f5;
-  border-radius: 8px;
-}
-
-.time-setting strong {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.library-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.library-header h2 {
-  margin: 0;
-}
-
-.script-box {
-  margin: 10px 0;
-  padding: 10px;
-  background: #f5f5f5;
-  border-radius: 8px;
-  line-height: 1.5;
-}
-
-.selection-actions {
-  margin-top: 10px;
-}
+:root{--bg:#f2f2f7;--card:#fff;--fg:#1c1c1e;--sub:#8e8e93;--fill:#eef0f4;--blue:#0a84ff;--red:#ff3b30;--dock:rgba(255,255,255,.85)}
+@media(prefers-color-scheme:dark){:root{--bg:#000;--card:#1c1c1e;--fg:#f2f2f7;--fill:#2c2c2e;--dock:rgba(28,28,30,.85)}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;font-size:16px}
+button,input,textarea,select{font:inherit}
+button{border:none;border-radius:14px;background:var(--blue);color:#fff;min-height:48px;padding:10px 14px;font-weight:600;cursor:pointer;touch-action:manipulation}
+button:active{opacity:.7;transform:scale(.98)}
+button:disabled{opacity:.35}
+button.tonal{background:var(--fill);color:var(--blue)}
+button.tonal.on{background:var(--blue);color:#fff}
+button.rec{background:var(--fill);color:var(--red)}
+button.rec.on{background:var(--red);color:#fff;animation:pulse 1.2s infinite}
+button.icon-btn{background:transparent;min-width:44px;min-height:44px;padding:0;font-size:20px}
+@keyframes pulse{50%{opacity:.6}}
+input,textarea,select{width:100%;border:none;border-radius:14px;padding:14px;background:var(--fill);color:var(--fg);font-size:16px}
+textarea{min-height:150px;resize:vertical}
+select{width:auto}
+h1{font-size:28px;margin:0}
+h2{font-size:20px;margin:0}
+h3{font-size:17px;margin:0 0 10px}
+p{line-height:1.6;margin:8px 0}
+.app{width:min(100%,720px);margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 14px) 16px calc(120px + env(safe-area-inset-bottom,0px))}
+.top-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+.card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:16px}
+.hidden{display:none!important}
+.muted{color:var(--sub);font-size:14px}
+.stack{display:flex;flex-direction:column;gap:10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.label{font-size:13px;font-weight:700;color:var(--sub);margin:16px 0 8px}
+.video-wrap{width:100%;aspect-ratio:16/9;background:#000;border-radius:14px;overflow:hidden;margin-top:10px}
+#player{width:100%;height:100%}
+.seek-wrap input[type=range]{padding:0;background:transparent;height:32px}
+.time-row{display:flex;justify-content:space-between;color:var(--sub);font-size:13px}
+.ab-values{display:flex;gap:16px;color:var(--sub);font-size:14px;margin-top:10px}
+details.script-builder{background:var(--card);border-radius:20px;margin-bottom:16px;overflow:hidden}
+details.script-builder summary{list-style:none;cursor:pointer;padding:18px;font-size:17px;font-weight:700}
+details.script-builder summary::-webkit-details-marker{display:none}
+details.script-builder summary::before{content:"▶";display:inline-block;font-size:12px;margin-right:8px;transition:transform .2s}
+details.script-builder[open] summary::before{transform:rotate(90deg)}
+.builder-body{padding:0 18px 18px}
+.sentence-list{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.sentence-item{display:flex;gap:12px;align-items:flex-start;background:var(--fill);border-radius:12px;padding:12px}
+.sentence-item input{width:22px;height:22px;flex:none;padding:0;margin:1px 0 0}
+.sentence-text{line-height:1.5}
+.section-card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:16px}
+.sec-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.chips{display:flex;gap:8px;margin-bottom:12px}
+.chip{background:var(--fill);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--sub);font-variant-numeric:tabular-nums}
+.section-answer{background:var(--fill);border-radius:14px;padding:14px;line-height:1.6;margin-bottom:12px}
+.dictation{margin-top:14px;padding:14px;background:var(--fill);border-radius:14px}
+.dictation textarea{background:var(--card);min-height:130px}
+.dictation .grid2,.dictation-result{margin-top:12px}
+.answer-box{background:var(--card);border-radius:12px;padding:14px;line-height:1.6;white-space:pre-wrap}
+.library-item{background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px}
+.library-title{font-size:17px;font-weight:700;margin-bottom:6px}
+.library-url{color:var(--sub);font-size:13px;word-break:break-all;margin-bottom:12px}
+.dock{position:fixed;left:0;right:0;bottom:0;background:var(--dock);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));z-index:10}
+.dock-in{width:min(100%,720px);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dock button{min-width:56px}
+.dock .play{width:64px;height:64px;border-radius:50%;font-size:26px;padding:0}
+.dock select{padding:12px 10px}
 </style>
 </head>
-
 <body>
+<div class="app">
 
-<div class="container">
-
-  <!-- ==============================
-       メイン画面
-  =============================== -->
-
-  <div id="mainView">
-
-    <button id="libraryButton" onclick="showLibrary()">
-      📚 動画ライブラリ
-    </button>
-
-    <h1>🎧 English Listening Trainer</h1>
-
-    <div id="currentVideoTitle" class="video-title">
-      動画未選択
-    </div>
-
-    <input
-      type="text"
-      id="youtubeUrl"
-      placeholder="YouTube URLを入力"
-    >
-
-    <button onclick="loadVideo()">
-      動画を読み込む
-    </button>
-
-    <div id="player"></div>
-
-    <div class="controls">
-
-      <div class="time">
-        <span id="currentTime">0:00</span>
-        /
-        <span id="duration">0:00</span>
-      </div>
-
-      <input
-        type="range"
-        id="seekBar"
-        min="0"
-        max="100"
-        value="0"
-        step="0.1"
-        oninput="seekVideo(this.value)"
-      >
-
-      <div>
-        <button onclick="playVideo()">▶ 再生</button>
-        <button onclick="pauseVideo()">⏸ 一時停止</button>
-        <button onclick="rewind()">↩ 5秒戻る</button>
-      </div>
-
-      <div>
-        <button onclick="setSpeed(0.5)">0.5x</button>
-        <button onclick="setSpeed(0.75)">0.75x</button>
-        <button onclick="setSpeed(1)">1x</button>
-        <button onclick="setSpeed(1.25)">1.25x</button>
-        <button onclick="setSpeed(1.5)">1.5x</button>
-      </div>
-
-    </div>
-
-    <hr>
-
-    <!-- ==============================
-         全文スクリプト
-    =============================== -->
-
-    <div class="panel">
-
-      <h3>📖 全文スクリプト</h3>
-
-      <div class="small">
-        全文を貼り付けて保存すると、文章単位に分割できます。
-      </div>
-
-      <textarea
-        id="scriptText"
-        placeholder="ここにBBCなどの全文スクリプトを貼り付けてください"
-      ></textarea>
-
-      <button onclick="saveScript()">
-        スクリプトを保存
-      </button>
-
-      <button
-        class="secondary"
-        onclick="clearScript()"
-      >
-        クリア
-      </button>
-
-    </div>
-
-    <div id="scriptSection"></div>
-
-    <hr>
-
-    <!-- ==============================
-         A/Bリピート
-    =============================== -->
-
-    <h3>A/Bリピート</h3>
-
-    <button onclick="setA()">A地点</button>
-    <button onclick="setB()">B地点</button>
-    <button onclick="toggleRepeat()">ON/OFF</button>
-    <button onclick="clearAB()">クリア</button>
-
-    <p id="abDisplay">
-      A: - / B: - / OFF
-    </p>
-
-    <button onclick="addSectionFromAB()">
-      ＋現在のA/Bをセクション化
-    </button>
-
-    <h3>セクション</h3>
-
-    <div id="sections"></div>
-
+<div id="mainView">
+  <div class="top-row">
+    <h1>Listening Trainer</h1>
+    <button class="tonal" onclick="showLibrary()">📚 ライブラリ</button>
   </div>
 
-
-  <!-- ==============================
-       ライブラリ画面
-  =============================== -->
-
-  <div id="libraryView" class="hidden">
-
-    <div class="library-header">
-
-      <h2>📚 動画ライブラリ</h2>
-
-      <button
-        class="secondary"
-        onclick="closeLibrary()"
-      >
-        ← 戻る
-      </button>
-
+  <div class="card">
+    <div class="stack">
+      <input id="videoUrl" type="text" inputmode="url" placeholder="YouTube URLを入力">
+      <button onclick="loadVideo()">動画を読み込む</button>
+    </div>
+    <p id="videoTitle" class="muted"></p>
+    <div class="video-wrap"><div id="player"></div></div>
+    <div class="seek-wrap">
+      <input id="seekBar" type="range" min="0" max="100" value="0" step="0.1" oninput="seekVideo(this.value)">
+      <div class="time-row"><span id="currentTime">0:00</span><span id="durationTime">0:00</span></div>
     </div>
 
-    <div id="libraryList"></div>
-
+    <div class="label">A/Bリピート</div>
+    <div class="grid2">
+      <button class="tonal" onclick="setAPoint()">A を設定</button>
+      <button class="tonal" onclick="setBPoint()">B を設定</button>
+      <button id="repeatButton" class="tonal" onclick="toggleABRepeat()">🔁 リピートOFF</button>
+      <button class="tonal" onclick="resetAB()">リセット</button>
+    </div>
+    <div class="ab-values">
+      <span>A: <strong id="aPoint">-</strong></span>
+      <span>B: <strong id="bPoint">-</strong></span>
+    </div>
   </div>
+
+  <div class="card">
+    <h3>スクリプト</h3>
+    <textarea id="scriptInput" placeholder="ここに動画のスクリプト全文を貼り付けてください"></textarea>
+    <div class="stack" style="margin-top:10px"><button onclick="saveScript()">スクリプトを保存</button></div>
+    <div id="scriptStatus" class="muted"></div>
+  </div>
+
+  <details class="script-builder">
+    <summary>スクリプトからセクションを作成</summary>
+    <div class="builder-body">
+      <p class="muted">セクションにしたい英文を選択して、作成ボタンを押してください。</p>
+      <div id="sentenceList" class="sentence-list"></div>
+      <div class="stack"><button onclick="createSectionFromSelected()">選択した文からセクションを作成</button></div>
+    </div>
+  </details>
+
+  <h3 style="margin:8px 4px 12px">セクション</h3>
+  <div id="sections"></div>
+
+  <div class="dock">
+    <div class="dock-in">
+      <button class="tonal" onclick="rewindVideo()">↩ 5s</button>
+      <button id="playBtn" class="play" onclick="togglePlay()">▶</button>
+      <select id="speedSelect" onchange="changeSpeed()">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1" selected>1.0x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="1.75">1.75x</option>
+        <option value="2">2.0x</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div id="libraryView" class="hidden">
+  <div class="top-row">
+    <h1>ライブラリ</h1>
+    <button class="tonal" onclick="closeLibrary()">← 戻る</button>
+  </div>
+  <div id="libraryList"></div>
+</div>
 
 </div>
 
-
-<script src="https://www.youtube.com/iframe_api"></script>
-
 <script>
+/* ========== 状態 ========== */
+let player = null, playerReady = false, pendingId = null;
+let currentVideoId = null, currentVideoTitle = "";
+let aPoint = null, bPoint = null, repeatEnabled = false;
+let duration = 0, isSeeking = false;
+let sections = [], scriptSentences = [];
+const dictationAnswers = {};
+const STORAGE_KEY = "englishTrainerVideos";
+const $ = id => document.getElementById(id);
 
-// =====================================================
-// グローバル状態
-// =====================================================
+/* 録音 */
+const recBlobs = {};
+let mediaRecorder = null, recordingId = null, recChunks = [];
+let curAudio = null, compareId = null;
 
-let player = null;
-
-let currentVideoId = null;
-let currentVideoTitle = "";
-
-let aPoint = null;
-let bPoint = null;
-let repeatEnabled = false;
-
-let duration = 0;
-
-let sections = [];
-let scriptSentences = [];
-
-let youtubeApiReady = false;
-
-
-// =====================================================
-// YouTube API
-// =====================================================
-
-function onYouTubeIframeAPIReady() {
-
-  youtubeApiReady = true;
-
-  createPlayer();
-
+/* ========== IndexedDB(録音の保存) ========== */
+function idbOpen() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open("englishTrainerRec", 1);
+    r.onupgradeneeded = () => r.result.createObjectStore("rec");
+    r.onsuccess = () => res(r.result);
+    r.onerror = () => rej(r.error);
+  });
 }
+async function idbOp(mode, fn) {
+  const db = await idbOpen();
+  return new Promise((res, rej) => {
+    const tx = db.transaction("rec", mode);
+    const rq = fn(tx.objectStore("rec"));
+    tx.oncomplete = () => res(rq && rq.result);
+    tx.onerror = () => rej(tx.error);
+  });
+}
+const idbPut = (k, v) => idbOp("readwrite", s => s.put(v, k));
+const idbGet = k => idbOp("readonly", s => s.get(k));
+const idbDel = k => idbOp("readwrite", s => s.delete(k));
+const idbKeys = () => idbOp("readonly", s => s.getAllKeys());
 
+/* ========== YouTube ========== */
+function onYouTubeIframeAPIReady() { createPlayer(); }
 
 function createPlayer() {
-
-  if (player) {
-    return;
-  }
-
+  if (player) return;
   player = new YT.Player("player", {
-
-    height: "220",
-    width: "100%",
-
-    videoId: "",
-
-    playerVars: {
-      playsinline: 1
-    },
-
+    playerVars: { playsinline: 1, rel: 0 },
     events: {
-
-      onReady: function() {
-
-        console.log("YouTube Player ready");
-
+      onReady: function () {
+        playerReady = true;
+        if (pendingId) { player.loadVideoById(pendingId); pendingId = null; }
+        updatePlayerInfo();
       },
-
-      onStateChange: function(event) {
-
-        // 動画情報取得の補助
-        if (
-          event.data === YT.PlayerState.PLAYING ||
-          event.data === YT.PlayerState.CUED
-        ) {
-
-          updateTitleFromPlayer();
-
-        }
-
+      onStateChange: function (e) {
+        updatePlayerInfo();
+        $("playBtn").textContent = e.data === 1 ? "⏸" : "▶";
+        if (e.data === 1) changeSpeed();
       }
-
     }
-
   });
-
 }
 
-
-function updateTitleFromPlayer() {
-
-  if (!player || !player.getVideoData) {
-    return;
-  }
-
-  try {
-
-    const data =
-      player.getVideoData();
-
-    if (
-      data &&
-      data.title &&
-      data.title.trim()
-    ) {
-
-      currentVideoTitle =
-        data.title.trim();
-
-      updateVideoTitle();
-
-      saveCurrentVideo();
-
-    }
-
-  } catch(e) {}
-
+function loadIntoPlayer(id) {
+  if (playerReady) player.loadVideoById(id);
+  else pendingId = id;
 }
-
-
-// =====================================================
-// URL → YouTube ID
-// =====================================================
 
 function extractVideoId(url) {
-
-  if (!url) {
-    return null;
-  }
-
+  if (!url) return null;
+  url = url.trim();
+  if (/^[\w-]{11}$/.test(url)) return url;
   try {
-
-    const u =
-      new URL(url);
-
-    // youtu.be/xxxxx
-    if (
-      u.hostname === "youtu.be" ||
-      u.hostname === "www.youtu.be"
-    ) {
-
-      return u.pathname
-        .replace("/", "")
-        .split("/")[0];
-
+    const u = new URL(url);
+    const h = u.hostname.replace(/^www\.|^m\./, "");
+    if (h === "youtu.be") return u.pathname.slice(1).split("/")[0] || null;
+    if (h.endsWith("youtube.com")) {
+      const v = u.searchParams.get("v");
+      if (v) return v;
+      const m = u.pathname.match(/^\/(?:shorts|embed|live)\/([\w-]+)/);
+      if (m) return m[1];
     }
-
-    // youtube.com/watch?v=xxxxx
-    if (
-      u.hostname.includes("youtube.com")
-    ) {
-
-      return u.searchParams.get("v");
-
-    }
-
-  } catch(e) {}
-
+  } catch (e) {}
   return null;
-
 }
 
-
-// =====================================================
-// 動画読み込み
-// =====================================================
-
-async function loadVideo() {
-
-  const input =
-    document.getElementById("youtubeUrl");
-
-  const url =
-    input.value.trim();
-
-  const id =
-    extractVideoId(url);
-
-  if (!id) {
-
-    alert("YouTube URLを確認してください");
-
-    return;
-
-  }
-
-  if (!player) {
-
-    alert(
-      "YouTubeプレイヤーの準備中です。少し待ってからもう一度押してください。"
-    );
-
-    return;
-
-  }
-
-  currentVideoId = id;
-
-  const videos =
-    getVideos();
-
-  const existing =
-    videos[id];
-
-  if (existing) {
-
-    currentVideoTitle =
-      existing.title || "YouTube動画";
-
-    sections =
-      existing.sections || [];
-
-    scriptSentences =
-      existing.scriptSentences || [];
-
-    document.getElementById("scriptText").value =
-      existing.script || "";
-
-  } else {
-
-    currentVideoTitle =
-      "YouTube動画";
-
-    sections = [];
-    scriptSentences = [];
-
-    document.getElementById("scriptText").value =
-      "";
-
-  }
-
-  aPoint = null;
-  bPoint = null;
-  repeatEnabled = false;
-
-  updateABDisplay();
-  updateVideoTitle();
-
-  // 現在のプレイヤーをそのまま使う
-  player.loadVideoById(id);
-
-  // タイトル取得
-  setTimeout(
-    updateTitleFromPlayer,
-    1000
-  );
-
-  setTimeout(
-    updateTitleFromPlayer,
-    2500
-  );
-
-  saveCurrentVideo();
-
-  renderScript();
-  renderSections();
-
-}
-
-
-// =====================================================
-// 動画タイトル
-// =====================================================
-
-function updateVideoTitle() {
-
-  const el =
-    document.getElementById(
-      "currentVideoTitle"
-    );
-
-  if (el) {
-
-    el.textContent =
-      currentVideoTitle || "YouTube動画";
-
-  }
-
-}
-
-
-// =====================================================
-// Storage
-// =====================================================
-
+/* ========== Storage ========== */
 function getVideos() {
-
-  try {
-
-    return JSON.parse(
-      localStorage.getItem(
-        "englishTrainerVideos"
-      ) || "{}"
-    );
-
-  } catch(e) {
-
-    return {};
-
-  }
-
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+  catch (e) { return {}; }
+}
+function saveVideos(v) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(v)); }
+  catch (e) { alert("保存に失敗しました。"); }
 }
 
-
-function saveVideos(videos) {
-
-  localStorage.setItem(
-    "englishTrainerVideos",
-    JSON.stringify(videos)
-  );
-
-}
-
-
-function saveCurrentVideo() {
-
-  if (!currentVideoId) {
-    return;
+/* ========== 動画読み込み ========== */
+function loadVideo() {
+  const url = $("videoUrl").value.trim();
+  const id = extractVideoId(url);
+  if (!id) { alert("YouTube URLを確認してください。"); return; }
+  currentVideoId = id;
+  const videos = getVideos();
+  if (!videos[id]) {
+    videos[id] = { id: id, title: "", url: url, script: "", scriptSentences: [], sections: [] };
+  } else {
+    videos[id].url = url;
   }
-
-  const videos =
-    getVideos();
-
-  const script =
-    document.getElementById(
-      "scriptText"
-    )?.value || "";
-
-  videos[currentVideoId] = {
-
-    id: currentVideoId,
-
-    title:
-      currentVideoTitle || "YouTube動画",
-
-    url:
-      `https://www.youtube.com/watch?v=${currentVideoId}`,
-
-    script: script,
-
-    scriptSentences:
-      scriptSentences,
-
-    sections:
-      sections
-
-  };
-
   saveVideos(videos);
-
+  resetAB();
+  loadCurrentVideoData();
+  loadIntoPlayer(id);
 }
 
-
-// =====================================================
-// スクリプト保存
-// =====================================================
-
-function saveScript() {
-
-  if (!currentVideoId) {
-
-    alert(
-      "先に動画を読み込んでください"
-    );
-
-    return;
-
-  }
-
-  const text =
-    document.getElementById(
-      "scriptText"
-    ).value.trim();
-
-  if (!text) {
-
-    alert(
-      "スクリプトを入力してください"
-    );
-
-    return;
-
-  }
-
-  scriptSentences =
-    splitScript(text);
-
-  saveCurrentVideo();
-
-  renderScript();
-
-  alert(
-    `${scriptSentences.length}個の文章に分割しました。`
-  );
-
+function loadCurrentVideoData() {
+  if (!currentVideoId) return;
+  const data = getVideos()[currentVideoId];
+  if (!data) return;
+  currentVideoTitle = data.title || "";
+  $("videoUrl").value = data.url || `https://www.youtube.com/watch?v=${currentVideoId}`;
+  $("videoTitle").textContent = currentVideoTitle;
+  $("scriptInput").value = data.script || "";
+  scriptSentences = data.scriptSentences || [];
+  sections = data.sections || [];
+  renderSentenceList();
+  renderSections();
 }
 
+function updatePlayerInfo() {
+  if (!player || !player.getVideoData) return;
+  try {
+    const d = player.getVideoData();
+    if (!d || !d.video_id || d.video_id !== currentVideoId) return;
+    if (d.title) {
+      currentVideoTitle = d.title;
+      $("videoTitle").textContent = d.title;
+      const v = getVideos();
+      if (v[currentVideoId] && v[currentVideoId].title !== d.title) {
+        v[currentVideoId].title = d.title;
+        saveVideos(v);
+      }
+    }
+  } catch (e) {}
+}
 
-function splitScript(text) {
+/* ========== プレイヤー操作 ========== */
+function playVideo() { if (playerReady) player.playVideo(); }
+function pauseVideo() { if (playerReady) player.pauseVideo(); }
+function togglePlay() {
+  if (!playerReady) return;
+  compareId = null;
+  stopAudio();
+  if (player.getPlayerState() === 1) player.pauseVideo();
+  else player.playVideo();
+}
+function rewindVideo() {
+  if (!playerReady) return;
+  player.seekTo(Math.max(0, player.getCurrentTime() - 5), true);
+}
+function seekVideo(value) {
+  if (!playerReady || duration <= 0) return;
+  player.seekTo(Number(value) / 100 * duration, true);
+}
+function changeSpeed() {
+  if (!playerReady) return;
+  player.setPlaybackRate(Number($("speedSelect").value));
+}
 
-  const result = [];
+["touchstart", "mousedown"].forEach(ev =>
+  $("seekBar").addEventListener(ev, () => { isSeeking = true; }, { passive: true }));
+["touchend", "touchcancel", "mouseup"].forEach(ev =>
+  window.addEventListener(ev, () => { isSeeking = false; }));
 
-  const normalized =
-    text
-      .replace(/\r/g, "")
-      .replace(/[ \t]+/g, " ");
+/* ========== A/B ========== */
+function setAPoint() {
+  if (!playerReady) return;
+  aPoint = player.getCurrentTime();
+  $("aPoint").textContent = formatTime(aPoint);
+}
+function setBPoint() {
+  if (!playerReady) return;
+  bPoint = player.getCurrentTime();
+  $("bPoint").textContent = formatTime(bPoint);
+}
+function toggleABRepeat() {
+  repeatEnabled = !repeatEnabled;
+  $("repeatButton").textContent = repeatEnabled ? "🔁 リピートON" : "🔁 リピートOFF";
+  $("repeatButton").classList.toggle("on", repeatEnabled);
+}
+function resetAB() {
+  aPoint = null; bPoint = null; repeatEnabled = false;
+  $("aPoint").textContent = "-";
+  $("bPoint").textContent = "-";
+  $("repeatButton").textContent = "🔁 リピートOFF";
+  $("repeatButton").classList.remove("on");
+}
 
-  const blocks =
-    normalized
-      .split(/\n+/)
-      .map(x => x.trim())
-      .filter(Boolean);
+/* ========== タイマー ========== */
+setInterval(function () {
+  if (!playerReady || !player.getCurrentTime) return;
+  try {
+    const cur = player.getCurrentTime();
+    duration = player.getDuration() || 0;
+    $("currentTime").textContent = formatTime(cur);
+    $("durationTime").textContent = formatTime(duration);
+    if (duration > 0 && !isSeeking) $("seekBar").value = cur / duration * 100;
 
-  blocks.forEach(block => {
-
-    /*
-      英文の基本的な文章区切り。
-
-      . ! ? のあとに続く文章を分割。
-      BBCのスクリプトを想定したシンプルな実装。
-    */
-
-    const matches =
-      block.match(
-        /[^.!?]+(?:[.!?]+|$)/g
-      );
-
-    if (matches && matches.length) {
-
-      matches.forEach(sentence => {
-
-        const s =
-          sentence.trim();
-
-        if (s) {
-          result.push(s);
-        }
-
-      });
-
-    } else {
-
-      result.push(block);
-
+    // 聞き比べ:お手本の終わりで自分の録音を再生
+    if (compareId) {
+      const cs = sections.find(x => x.id === compareId);
+      if (!cs) { compareId = null; }
+      else if (cur >= cs.end) {
+        const id = compareId;
+        compareId = null;
+        player.pauseVideo();
+        playRecording(id, true);
+        return;
+      }
     }
 
+    if (repeatEnabled && aPoint !== null && bPoint !== null && bPoint > aPoint && cur >= bPoint) {
+      player.seekTo(aPoint, true);
+      return;
+    }
+    const s = sections.find(x => x.repeat && x.start !== null && x.end !== null && cur >= x.end);
+    if (s && !compareId) player.seekTo(s.start, true);
+  } catch (e) {}
+}, 200);
+
+/* ========== スクリプト ========== */
+function saveScript() {
+  if (!currentVideoId) { alert("先に動画を読み込んでください。"); return; }
+  const text = $("scriptInput").value.trim();
+  const next = splitScript(text);
+
+  // 同じ文は元のIDを引き継ぐ(セクションが壊れないように)
+  const pool = {};
+  scriptSentences.forEach(s => { (pool[s.text] = pool[s.text] || []).push(s.id); });
+  next.forEach(s => {
+    const q = pool[s.text];
+    if (q && q.length) s.id = q.shift();
+  });
+  scriptSentences = next;
+
+  const valid = new Set(next.map(s => s.id));
+  sections.forEach(sec => {
+    if (sec.sentenceIds) sec.sentenceIds = sec.sentenceIds.filter(i => valid.has(i));
   });
 
-  return result;
+  const videos = getVideos();
+  if (!videos[currentVideoId]) return;
+  videos[currentVideoId].script = text;
+  videos[currentVideoId].scriptSentences = scriptSentences;
+  videos[currentVideoId].sections = sections;
+  saveVideos(videos);
 
+  renderSentenceList();
+  renderSections();
+  $("scriptStatus").textContent = `${next.length}文に分割しました。`;
 }
 
+const ABBR = /\b(?:Mr|Mrs|Ms|Dr|Prof)\.$/;
 
-function clearScript() {
-
-  if (!currentVideoId) {
-    return;
-  }
-
-  if (
-    !confirm(
-      "スクリプトを削除しますか？"
-    )
-  ) {
-
-    return;
-
-  }
-
-  document.getElementById(
-    "scriptText"
-  ).value = "";
-
-  scriptSentences = [];
-
-  saveCurrentVideo();
-
-  renderScript();
-
+function splitScript(text) {
+  if (!text.trim()) return [];
+  const lines = text.replace(/\r\n/g, "\n").split(/\n+/).map(x => x.trim()).filter(Boolean);
+  const out = [];
+  lines.forEach(line => {
+    const m = line.match(/[^.!?]+(?:[.!?]+["'”’)]*|$)/g);
+    if (!m) { out.push(line); return; }
+    let buf = "";
+    m.forEach(p => {
+      p = p.trim();
+      if (!p) return;
+      buf = buf ? buf + " " + p : p;
+      if (ABBR.test(buf)) return;
+      out.push(buf);
+      buf = "";
+    });
+    if (buf) out.push(buf);
+  });
+  return out.map((t, i) => ({
+    id: `sentence_${Date.now()}_${i}_${Math.random().toString(36).slice(2, 7)}`,
+    text: t
+  }));
 }
 
-
-// =====================================================
-// スクリプト表示
-// =====================================================
-
-function renderScript() {
-
-  const container =
-    document.getElementById(
-      "scriptSection"
-    );
-
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = "";
-
+/* ========== 文一覧 ========== */
+function renderSentenceList() {
+  const c = $("sentenceList");
+  c.innerHTML = "";
   if (!scriptSentences.length) {
+    c.innerHTML = `<p class="muted">まだスクリプトがありません。</p>`;
     return;
   }
-
-  const panel =
-    document.createElement("div");
-
-  panel.className =
-    "panel";
-
-  let html = `
-
-    <h3>
-      📝 スクリプトからセクションを作成
-    </h3>
-
-    <div class="small">
-      セクションに含めたい文章を選択してください。
-      複数選択できます。
-    </div>
-
-  `;
-
-  scriptSentences.forEach(
-    (sentence, index) => {
-
-      const used =
-        sections.some(
-          section =>
-            section.sentenceIds &&
-            section.sentenceIds.includes(index)
-        );
-
-      html += `
-
-        <div class="script-item">
-
-          <label>
-
-            <input
-              type="checkbox"
-              class="script-check"
-              value="${index}"
-            >
-
-            <span class="script-number">
-              ${index + 1}.
-            </span>
-
-            <span class="script-text">
-              ${escapeHtml(sentence)}
-            </span>
-
-          </label>
-
-          ${
-            used
-              ? `<div class="badge">
-                  セクション登録済み
-                </div>`
-              : ""
-          }
-
-        </div>
-
-      `;
-
-    }
-  );
-
-  html += `
-
-    <div class="selection-actions">
-
-      <button
-        onclick="createSectionFromScript()"
-      >
-        ＋選択した文章からセクションを作成
-      </button>
-
-    </div>
-
-  `;
-
-  panel.innerHTML =
-    html;
-
-  container.appendChild(panel);
-
+  scriptSentences.forEach(s => {
+    const item = document.createElement("label");
+    item.className = "sentence-item";
+    item.innerHTML = `<input type="checkbox" data-sentence-id="${s.id}"><div class="sentence-text">${escapeHtml(s.text)}</div>`;
+    c.appendChild(item);
+  });
 }
 
+/* ========== セクション作成 ========== */
+function createSectionFromSelected() {
+  if (!currentVideoId) { alert("先に動画を読み込んでください。"); return; }
+  const checked = Array.from(document.querySelectorAll('#sentenceList input[type="checkbox"]:checked'));
+  if (!checked.length) { alert("セクションにしたい文を選択してください。"); return; }
 
-// =====================================================
-// スクリプト → セクション
-// =====================================================
-
-function createSectionFromScript() {
-
-  const checked =
-    [
-      ...document.querySelectorAll(
-        ".script-check:checked"
-      )
-    ].map(
-      el => Number(el.value)
-    );
-
-  if (!checked.length) {
-
-    alert(
-      "文章を1つ以上選択してください"
-    );
-
-    return;
-
-  }
-
-  checked.sort(
-    (a, b) => a - b
-  );
-
-  const answer =
-    checked
-      .map(
-        i => scriptSentences[i]
-      )
-      .join(" ");
-
-  const section = {
-
-    id:
-      Date.now(),
-
-    start:
-      null,
-
-    end:
-      null,
-
-    repeat:
-      false,
-
-    answer:
-      answer,
-
-    sentenceIds:
-      checked
-
-  };
-
-  sections.push(
-    section
-  );
-
+  sections.push({
+    id: `section_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    start: null, end: null, repeat: false, answer: "",
+    sentenceIds: checked.map(cb => cb.dataset.sentenceId)
+  });
   saveCurrentVideo();
-
-  renderScript();
   renderSections();
+  checked.forEach(cb => { cb.checked = false; });
 
+  setTimeout(() => {
+    const last = document.querySelector("#sections .section-card:last-child");
+    if (last) last.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, 100);
 }
-
-
-// =====================================================
-// A/B
-// =====================================================
-
-function setA() {
-
-  if (!player) {
-    return;
-  }
-
-  aPoint =
-    player.getCurrentTime();
-
-  updateABDisplay();
-
-}
-
-
-function setB() {
-
-  if (!player) {
-    return;
-  }
-
-  bPoint =
-    player.getCurrentTime();
-
-  updateABDisplay();
-
-}
-
-
-function toggleRepeat() {
-
-  if (
-    aPoint === null ||
-    bPoint === null
-  ) {
-
-    alert(
-      "先にA地点とB地点を設定してください"
-    );
-
-    return;
-
-  }
-
-  if (
-    bPoint <= aPoint
-  ) {
-
-    alert(
-      "B地点はA地点より後にしてください"
-    );
-
-    return;
-
-  }
-
-  repeatEnabled =
-    !repeatEnabled;
-
-  updateABDisplay();
-
-}
-
-
-function clearAB() {
-
-  aPoint = null;
-  bPoint = null;
-  repeatEnabled = false;
-
-  updateABDisplay();
-
-}
-
-
-function updateABDisplay() {
-
-  const el =
-    document.getElementById(
-      "abDisplay"
-    );
-
-  if (!el) {
-    return;
-  }
-
-  const a =
-    aPoint === null
-      ? "-"
-      : formatTime(aPoint);
-
-  const b =
-    bPoint === null
-      ? "-"
-      : formatTime(bPoint);
-
-  el.textContent =
-    `A: ${a} / B: ${b} / ${repeatEnabled ? "ON" : "OFF"}`;
-
-}
-
-
-// =====================================================
-// A/B → セクション
-// =====================================================
-
-function addSectionFromAB() {
-
-  if (!currentVideoId) {
-
-    alert(
-      "先に動画を読み込んでください"
-    );
-
-    return;
-
-  }
-
-  if (
-    aPoint === null ||
-    bPoint === null
-  ) {
-
-    alert(
-      "A地点とB地点を設定してください"
-    );
-
-    return;
-
-  }
-
-  if (
-    bPoint <= aPoint
-  ) {
-
-    alert(
-      "B地点はA地点より後にしてください"
-    );
-
-    return;
-
-  }
-
-  const section = {
-
-    id:
-      Date.now(),
-
-    start:
-      aPoint,
-
-    end:
-      bPoint,
-
-    repeat:
-      false,
-
-    answer:
-      "",
-
-    sentenceIds:
-      []
-
-  };
-
-  sections.push(
-    section
-  );
-
-  saveCurrentVideo();
-
-  renderSections();
-
-}
-
-
-// =====================================================
-// セクション表示
-// =====================================================
-
-function renderSections() {
-
-  const container =
-    document.getElementById(
-      "sections"
-    );
-
-  if (!container) {
-    return;
-  }
-
-  container.innerHTML = "";
-
-  if (!sections.length) {
-
-    container.innerHTML =
-      `
-        <div class="empty">
-          まだセクションがありません。
-        </div>
-      `;
-
-    return;
-
-  }
-
-  sections.forEach(
-    (section, index) => {
-
-      const div =
-        document.createElement(
-          "div"
-        );
-
-      div.className =
-        "section";
-
-      const sentenceText =
-        getSectionAnswer(
-          section
-        );
-
-      div.innerHTML = `
-
-        <div class="section-title">
-          Section ${index + 1}
-        </div>
-
-        <div class="small">
-
-          ${
-            section.start === null
-              ? "開始時間未設定"
-              : formatTime(section.start)
-          }
-
-          →
-
-          ${
-            section.end === null
-              ? "終了時間未設定"
-              : formatTime(section.end)
-          }
-
-        </div>
-
-        ${
-          sentenceText
-            ? `
-              <div class="script-box">
-                ${escapeHtml(sentenceText)}
-              </div>
-            `
-            : ""
-        }
-
-        <div>
-
-          <button
-            onclick="playSection(${section.id})"
-          >
-            ▶ 再生
-          </button>
-
-          <button
-            onclick="setSectionTime(${section.id})"
-          >
-            ⏱ 現在位置を設定
-          </button>
-
-          <button
-            onclick="toggleSectionRepeat(${section.id})"
-          >
-            ${
-              section.repeat
-                ? "🔁 リピートON"
-                : "🔁 リピートOFF"
-            }
-          </button>
-
-          <button
-            onclick="openDictation(${section.id})"
-          >
-            📝 ディクテーション
-          </button>
-
-          <button
-            class="danger"
-            onclick="deleteSection(${section.id})"
-          >
-            🗑 削除
-          </button>
-
-        </div>
-
-        <div class="time-setting">
-
-          <strong>
-            動画時間
-          </strong>
-
-          <div>
-            A:
-            ${
-              section.start === null
-                ? "-"
-                : formatTime(section.start)
-            }
-          </div>
-
-          <div>
-            B:
-            ${
-              section.end === null
-                ? "-"
-                : formatTime(section.end)
-            }
-          </div>
-
-          <div class="small">
-            「⏱ 現在位置を設定」は、
-            最初に開始位置、次に終了位置で押してください。
-          </div>
-
-        </div>
-
-        <div
-          id="dictation-${section.id}"
-          class="dictation hidden"
-        >
-
-          <div class="small">
-            まず動画を何度も聞いて、
-            聞こえた英文を入力してください。
-          </div>
-
-          <textarea
-            id="input-${section.id}"
-            placeholder="ここに聞き取った英文を入力"
-          ></textarea>
-
-          <button
-            onclick="submitDictation(${section.id})"
-          >
-            回答を確定
-          </button>
-
-          <div
-            id="submitted-${section.id}"
-            class="result"
-          ></div>
-
-          <button
-            id="showAnswerButton-${section.id}"
-            class="secondary hidden"
-            onclick="showAnswer(${section.id})"
-          >
-            正解を表示
-          </button>
-
-          <div
-            id="answer-${section.id}"
-            class="answer"
-          >
-            <strong>正解：</strong>
-
-            <div>
-              ${
-                escapeHtml(
-                  sentenceText ||
-                  "正解文がありません"
-                )
-              }
-            </div>
-
-          </div>
-
-        </div>
-
-      `;
-
-      container.appendChild(
-        div
-      );
-
-    }
-  );
-
-}
-
 
 function getSectionAnswer(section) {
-
-  if (
-    section.sentenceIds &&
-    section.sentenceIds.length
-  ) {
-
+  if (section.sentenceIds && section.sentenceIds.length) {
     return section.sentenceIds
-      .map(
-        i => scriptSentences[i]
-      )
+      .map(id => { const s = scriptSentences.find(x => x.id === id); return s ? s.text : ""; })
       .filter(Boolean)
       .join(" ");
-
   }
-
   return section.answer || "";
-
 }
 
+/* ========== セクション表示 ========== */
+function renderSections() {
+  const c = $("sections");
 
-// =====================================================
-// セクション時間設定
-// =====================================================
+  // 再描画しても、開いているディクテーションを消さない
+  const saved = {};
+  c.querySelectorAll(".dictation:not(.hidden)").forEach(d => {
+    const ta = d.querySelector("textarea");
+    saved[d.id.replace("dictation-", "")] = { html: d.innerHTML, value: ta ? ta.value : "" };
+  });
 
-function setSectionTime(id) {
-
-  const section =
-    sections.find(
-      s => s.id === id
-    );
-
-  if (!section || !player) {
+  c.innerHTML = "";
+  if (!sections.length) {
+    c.innerHTML = `<div class="card"><p class="muted">まだセクションがありません。</p></div>`;
     return;
   }
 
-  const now =
-    player.getCurrentTime();
+  sections.forEach((section, index) => {
+    const id = section.id;
+    const answer = getSectionAnswer(section);
+    const startText = section.start !== null ? formatTime(section.start) : "--:--";
+    const endText = section.end !== null ? formatTime(section.end) : "--:--";
+    const timeLabel = section.start === null ? "⏱ 開始を設定"
+      : section.end === null ? "⏱ 終了を設定" : "⏱ 時間を変更";
+    const has = !!recBlobs[id];
+    const recording = recordingId === id;
 
-  if (
-    section.start === null
-  ) {
+    const card = document.createElement("div");
+    card.className = "section-card";
+    card.innerHTML = `
+      <div class="sec-head">
+        <h2>Section ${index + 1}</h2>
+        <button class="icon-btn" aria-label="削除" onclick="deleteSection('${id}')">🗑</button>
+      </div>
+      <div class="chips"><span class="chip">A ${startText}</span><span class="chip">B ${endText}</span></div>
+      <div class="section-answer">${escapeHtml(answer)}</div>
+      <div class="grid2">
+        <button onclick="playSection('${id}')">▶ 再生</button>
+        <button class="tonal ${section.repeat ? "on" : ""}" onclick="toggleSectionRepeat('${id}')">🔁 リピート${section.repeat ? "ON" : "OFF"}</button>
+        <button class="tonal" onclick="setSectionTime('${id}')">${timeLabel}</button>
+        <button class="tonal" onclick="openDictation('${id}')">📝 ディクテーション</button>
+      </div>
+      <div class="label">発音練習</div>
+      <div class="grid3">
+        <button class="rec ${recording ? "on" : ""}" onclick="toggleRecord('${id}')">${recording ? "⏹ 停止" : "🎙 録音"}</button>
+        <button class="tonal" ${has ? "" : "disabled"} onclick="playRecording('${id}')">▶ 自分</button>
+        <button class="tonal" ${has ? "" : "disabled"} onclick="compareSection('${id}')">⇄ 比較</button>
+      </div>
+      <div id="dictation-${id}" class="dictation hidden"></div>
+    `;
+    c.appendChild(card);
+  });
 
-    section.start =
-      now;
-
-    alert(
-      `開始時間を ${formatTime(now)} に設定しました。\n\n動画を終了地点まで進めて、もう一度このボタンを押してください。`
-    );
-
-  } else if (
-    section.end === null
-  ) {
-
-    if (
-      now <= section.start
-    ) {
-
-      alert(
-        "終了時間は開始時間より後にしてください"
-      );
-
-      return;
-
-    }
-
-    section.end =
-      now;
-
-    alert(
-      `終了時間を ${formatTime(now)} に設定しました。`
-    );
-
-  } else {
-
-    const choice =
-      confirm(
-        `現在位置 ${formatTime(now)} を開始時間に設定しますか？\n\n「キャンセル」で終了時間を設定します。`
-      );
-
-    if (choice) {
-
-      section.start =
-        now;
-
-    } else {
-
-      if (
-        now <= section.start
-      ) {
-
-        alert(
-          "終了時間は開始時間より後にしてください"
-        );
-
-        return;
-
-      }
-
-      section.end =
-        now;
-
-    }
-
-  }
-
-  saveCurrentVideo();
-
-  renderSections();
-
+  Object.keys(saved).forEach(id => {
+    const d = $("dictation-" + id);
+    if (!d) return;
+    d.innerHTML = saved[id].html;
+    d.classList.remove("hidden");
+    const ta = $("dictation-input-" + id);
+    if (ta) ta.value = saved[id].value;
+  });
 }
 
+/* ========== セクション時間 ========== */
+function setSectionTime(id) {
+  if (!playerReady) return;
+  const section = sections.find(s => s.id === id);
+  if (!section) return;
+  const cur = player.getCurrentTime();
 
-// =====================================================
-// セクション再生
-// =====================================================
+  if (section.start === null) {
+    section.start = cur;
+  } else if (section.end === null) {
+    section.end = cur;
+  } else {
+    const ans = confirm("開始時間を現在位置に変更しますか？\n\n「キャンセル」を押すと終了時間を変更します。");
+    if (ans) section.start = cur; else section.end = cur;
+  }
+  saveCurrentVideo();
+  renderSections();
+}
 
 function playSection(id) {
-
-  const section =
-    sections.find(
-      s => s.id === id
-    );
-
-  if (!section) {
-    return;
-  }
-
-  if (
-    section.start === null
-  ) {
-
-    alert(
-      "開始時間が設定されていません"
-    );
-
-    return;
-
-  }
-
-  repeatEnabled =
-    false;
-
-  player.seekTo(
-    section.start,
-    true
-  );
-
+  if (!playerReady) return;
+  const section = sections.find(s => s.id === id);
+  if (!section) return;
+  if (section.start === null) { alert("開始時間を設定してください。"); return; }
+  compareId = null;
+  stopAudio();
+  player.seekTo(section.start, true);
   player.playVideo();
-
-  updateABDisplay();
-
 }
-
 
 function toggleSectionRepeat(id) {
-
-  const section =
-    sections.find(
-      s => s.id === id
-    );
-
-  if (!section) {
+  const section = sections.find(s => s.id === id);
+  if (!section) return;
+  if (section.start === null || section.end === null) {
+    alert("開始時間と終了時間を設定してください。");
     return;
   }
-
-  if (
-    section.start === null ||
-    section.end === null
-  ) {
-
-    alert(
-      "先にセクションの開始・終了時間を設定してください"
-    );
-
-    return;
-
-  }
-
-  section.repeat =
-    !section.repeat;
-
+  section.repeat = !section.repeat;
   saveCurrentVideo();
-
   renderSections();
-
 }
-
 
 function deleteSection(id) {
-
-  if (
-    !confirm(
-      "このセクションを削除しますか？"
-    )
-  ) {
-
-    return;
-
-  }
-
-  sections =
-    sections.filter(
-      s => s.id !== id
-    );
-
+  if (!confirm("このセクションを削除しますか？\n録音も削除されます。")) return;
+  sections = sections.filter(s => s.id !== id);
+  delete dictationAnswers[id];
+  delete recBlobs[id];
+  idbDel(id).catch(() => {});
   saveCurrentVideo();
-
-  renderScript();
   renderSections();
-
 }
 
+/* ========== 録音 ========== */
+function stopAudio() {
+  if (curAudio) { curAudio.pause(); curAudio = null; }
+}
 
-// =====================================================
-// ディクテーション
-// =====================================================
-
-function openDictation(id) {
-
-  const box =
-    document.getElementById(
-      `dictation-${id}`
-    );
-
-  if (!box) {
+async function toggleRecord(id) {
+  if (recordingId === id && mediaRecorder) { mediaRecorder.stop(); return; }
+  if (recordingId) { alert("別のセクションを録音中です。"); return; }
+  if (!navigator.mediaDevices || !window.MediaRecorder) {
+    alert("このブラウザでは録音できません。");
     return;
   }
-
-  box.classList.toggle(
-    "hidden"
-  );
-
+  try {
+    compareId = null;
+    stopAudio();
+    pauseVideo();
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const rec = new MediaRecorder(stream);
+    recChunks = [];
+    rec.ondataavailable = e => { if (e.data && e.data.size) recChunks.push(e.data); };
+    rec.onstop = async function () {
+      stream.getTracks().forEach(t => t.stop());
+      const blob = new Blob(recChunks, { type: rec.mimeType || "audio/mp4" });
+      recordingId = null;
+      mediaRecorder = null;
+      if (blob.size) {
+        recBlobs[id] = blob;
+        try { await idbPut(id, blob); } catch (e) { console.log(e); }
+      }
+      renderSections();
+    };
+    rec.start();
+    mediaRecorder = rec;
+    recordingId = id;
+    renderSections();
+  } catch (e) {
+    recordingId = null;
+    mediaRecorder = null;
+    alert("マイクを使えませんでした。Safariのマイク許可と、https で開いているかを確認してください。");
+  }
 }
 
+function makeAudio(id) {
+  const blob = recBlobs[id];
+  if (!blob) return null;
+  const url = URL.createObjectURL(blob);
+  const a = new Audio(url);
+  a.onended = () => URL.revokeObjectURL(url);
+  return a;
+}
+
+function playRecording(id, fromCompare) {
+  if (!recBlobs[id]) { alert("録音がありません。"); return; }
+  if (!fromCompare) {
+    compareId = null;
+    pauseVideo();
+    stopAudio();
+    curAudio = makeAudio(id);
+  }
+  if (!curAudio) curAudio = makeAudio(id);
+  curAudio.currentTime = 0;
+  curAudio.play().catch(() => alert("再生できませんでした。「▶ 自分」を押してください。"));
+}
+
+function compareSection(id) {
+  const s = sections.find(x => x.id === id);
+  if (!playerReady || !s || s.start === null || s.end === null) {
+    alert("開始時間と終了時間を設定してください。");
+    return;
+  }
+  if (!recBlobs[id]) { alert("先に録音してください。"); return; }
+  stopAudio();
+  // iPhoneでは、タップ中に音声を準備しておくと後から自動再生できる
+  curAudio = makeAudio(id);
+  curAudio.muted = true;
+  curAudio.play().then(() => {
+    curAudio.pause();
+    curAudio.currentTime = 0;
+    curAudio.muted = false;
+  }).catch(() => { if (curAudio) curAudio.muted = false; });
+  compareId = id;
+  player.seekTo(s.start, true);
+  player.playVideo();
+}
+
+/* ========== ディクテーション ========== */
+function openDictation(id) {
+  const section = sections.find(s => s.id === id);
+  if (!section) return;
+  const c = $("dictation-" + id);
+  if (!c) return;
+
+  // この時点では正解をDOMに出さない
+  c.innerHTML = `
+    <h3>📝 ディクテーション</h3>
+    <p class="muted">動画を何度も聞いて、聞こえた英文を入力してください。</p>
+    <textarea id="dictation-input-${id}" placeholder="ここに聞き取った英文を入力"></textarea>
+    <div class="grid2"><button onclick="submitDictation('${id}')">回答を確定</button></div>
+    <div id="dictation-result-${id}" class="dictation-result"></div>
+  `;
+  c.classList.remove("hidden");
+}
 
 function submitDictation(id) {
+  const input = $("dictation-input-" + id);
+  const result = $("dictation-result-" + id);
+  if (!input || !result) return;
+  const userAnswer = input.value.trim();
+  if (!userAnswer) { alert("回答を入力してください。"); return; }
 
-  const section =
-    sections.find(
-      s => s.id === id
-    );
+  // 回答はHTMLに埋め込まず、変数に保存する
+  dictationAnswers[id] = userAnswer;
 
-  if (!section) {
-    return;
-  }
-
-  const answer =
-    getSectionAnswer(
-      section
-    );
-
-  if (!answer) {
-
-    alert(
-      "このセクションには正解文が設定されていません。"
-    );
-
-    return;
-
-  }
-
-  const input =
-    document.getElementById(
-      `input-${id}`
-    ).value.trim();
-
-  if (!input) {
-
-    alert(
-      "回答を入力してください"
-    );
-
-    return;
-
-  }
-
-  const submitted =
-    document.getElementById(
-      `submitted-${id}`
-    );
-
-  submitted.style.display =
-    "block";
-
-  submitted.className =
-    "result";
-
-  submitted.innerHTML =
-    "回答を確定しました。正解を見るまで答えは表示されません。";
-
-  const button =
-    document.getElementById(
-      `showAnswerButton-${id}`
-    );
-
-  button.classList.remove(
-    "hidden"
-  );
-
+  result.innerHTML = `
+    <p>回答を受け付けました。</p>
+    <div class="grid2"><button onclick="revealDictationAnswer('${id}')">正解を表示</button></div>
+  `;
 }
 
+function revealDictationAnswer(id) {
+  const section = sections.find(s => s.id === id);
+  const result = $("dictation-result-" + id);
+  if (!section || !result) return;
 
-function showAnswer(id) {
+  const userAnswer = dictationAnswers[id] || "";
+  const answer = getSectionAnswer(section);
+  const isCorrect = normalizeAnswer(userAnswer) === normalizeAnswer(answer);
 
-  const section =
-    sections.find(
-      s => s.id === id
-    );
-
-  if (!section) {
-    return;
-  }
-
-  const input =
-    document.getElementById(
-      `input-${id}`
-    ).value;
-
-  const answer =
-    getSectionAnswer(
-      section
-    );
-
-  const answerBox =
-    document.getElementById(
-      `answer-${id}`
-    );
-
-  answerBox.style.display =
-    "block";
-
-  const inputNormalized =
-    normalizeText(input);
-
-  const answerNormalized =
-    normalizeText(answer);
-
-  const submitted =
-    document.getElementById(
-      `submitted-${id}`
-    );
-
-  if (
-    inputNormalized ===
-    answerNormalized
-  ) {
-
-    submitted.className =
-      "result correct";
-
-    submitted.innerHTML =
-      "🎉 正解！";
-
-  } else {
-
-    submitted.className =
-      "result incorrect";
-
-    submitted.innerHTML =
-      "惜しいです。正解と見比べてみましょう。";
-
-  }
-
+  result.innerHTML = `
+    <div class="answer-box"><strong>あなたの回答</strong><div>${escapeHtml(userAnswer)}</div></div>
+    <div class="answer-box" style="margin-top:10px"><strong>正解</strong><div>${escapeHtml(answer)}</div></div>
+    <p>${isCorrect
+      ? "🎉 完全一致です。"
+      : "もう一度、音声を聞いて正解と自分の回答を比較してみましょう。"}</p>
+  `;
 }
 
-
-function normalizeText(text) {
-
-  return String(text)
+function normalizeAnswer(text) {
+  return text
     .toLowerCase()
-    .replace(
-      /[.,!?;:"'“”‘’()[\]{}]/g,
-      ""
-    )
-    .replace(
-      /\s+/g,
-      " "
-    )
+    .replace(/[-–—]/g, " ")
+    .replace(/[.,!?;:'"“”‘’…()]/g, "")
+    .replace(/\s+/g, " ")
     .trim();
-
 }
 
+/* ========== 保存 ========== */
+function saveCurrentVideo() {
+  if (!currentVideoId) return;
+  const v = getVideos();
+  const d = v[currentVideoId] || (v[currentVideoId] = {
+    id: currentVideoId, title: currentVideoTitle || "",
+    url: $("videoUrl").value, script: "", scriptSentences: [], sections: []
+  });
+  if (currentVideoTitle) d.title = currentVideoTitle;
+  d.scriptSentences = scriptSentences;
+  d.sections = sections;
+  saveVideos(v);
+}
 
-// =====================================================
-// 動画ライブラリ
-// =====================================================
-
+/* ========== ライブラリ ========== */
 function showLibrary() {
-
-  document
-    .getElementById("mainView")
-    .classList.add("hidden");
-
-  document
-    .getElementById("libraryView")
-    .classList.remove("hidden");
-
   renderLibrary();
-
+  $("mainView").classList.add("hidden");
+  $("libraryView").classList.remove("hidden");
+  window.scrollTo(0, 0);
 }
-
-
 function closeLibrary() {
-
-  document
-    .getElementById("libraryView")
-    .classList.add("hidden");
-
-  document
-    .getElementById("mainView")
-    .classList.remove("hidden");
-
-  // プレイヤーは破棄しない
-  // これが今回の重要ポイント
-
+  $("libraryView").classList.add("hidden");
+  $("mainView").classList.remove("hidden");
 }
-
 
 function renderLibrary() {
-
-  const container =
-    document.getElementById(
-      "libraryList"
-    );
-
-  if (!container) {
+  const c = $("libraryList");
+  c.innerHTML = "";
+  const list = Object.values(getVideos()).reverse();
+  if (!list.length) {
+    c.innerHTML = `<div class="card"><p class="muted">まだ動画が登録されていません。</p></div>`;
     return;
   }
-
-  const videos =
-    getVideos();
-
-  const ids =
-    Object.keys(
-      videos
-    ).reverse();
-
-  if (!ids.length) {
-
-    container.innerHTML =
-      `
-        <div class="panel empty">
-          まだ動画がありません。<br>
-          YouTube動画を読み込むと自動的に登録されます。
-        </div>
-      `;
-
-    return;
-
-  }
-
-  container.innerHTML = "";
-
-  ids.forEach(
-    id => {
-
-      const video =
-        videos[id];
-
-      const item =
-        document.createElement(
-          "div"
-        );
-
-      item.className =
-        "library-item";
-
-      const sentenceCount =
-        video.scriptSentences?.length || 0;
-
-      const sectionCount =
-        video.sections?.length || 0;
-
-      item.innerHTML = `
-
-        <div class="library-title">
-          ${escapeHtml(
-            video.title || "YouTube動画"
-          )}
-        </div>
-
-        <div class="library-url">
-          ${escapeHtml(
-            video.url
-          )}
-        </div>
-
-        <div class="small">
-          文章 ${sentenceCount}件 /
-          セクション ${sectionCount}件
-        </div>
-
-        <button
-          onclick="openSavedVideo('${id}')"
-        >
-          ▶ 開く
-        </button>
-
-        <button
-          class="danger"
-          onclick="deleteSavedVideo('${id}')"
-        >
-          🗑 削除
-        </button>
-
-      `;
-
-      container.appendChild(
-        item
-      );
-
-    }
-  );
-
+  list.forEach(video => {
+    const item = document.createElement("div");
+    item.className = "library-item";
+    item.innerHTML = `
+      <div class="library-title">${escapeHtml(video.title || "タイトル未取得")}</div>
+      <div class="library-url">${escapeHtml(video.url || "")}</div>
+      <div class="grid2">
+        <button onclick="openSavedVideo('${video.id}')">開く</button>
+        <button class="tonal" style="color:var(--red)" onclick="deleteSavedVideo('${video.id}')">削除</button>
+      </div>
+    `;
+    c.appendChild(item);
+  });
 }
-
-
-// =====================================================
-// ライブラリから動画を開く
-// =====================================================
 
 function openSavedVideo(id) {
-
-  const videos =
-    getVideos();
-
-  const video =
-    videos[id];
-
-  if (!video) {
-    return;
-  }
-
-  currentVideoId =
-    video.id;
-
-  currentVideoTitle =
-    video.title || "YouTube動画";
-
-  sections =
-    video.sections || [];
-
-  scriptSentences =
-    video.scriptSentences || [];
-
-  // メイン画面に戻す
-  closeLibrary();
-
-  // URL・スクリプトをセット
-  document.getElementById(
-    "youtubeUrl"
-  ).value =
-    video.url;
-
-  document.getElementById(
-    "scriptText"
-  ).value =
-    video.script || "";
-
-  updateVideoTitle();
-
-  renderScript();
+  const data = getVideos()[id];
+  if (!data) return;
+  currentVideoId = data.id;
+  currentVideoTitle = data.title || "";
+  $("videoUrl").value = data.url || `https://www.youtube.com/watch?v=${id}`;
+  $("videoTitle").textContent = currentVideoTitle;
+  $("scriptInput").value = data.script || "";
+  scriptSentences = data.scriptSentences || [];
+  sections = data.sections || [];
+  compareId = null;
+  stopAudio();
+  resetAB();
+  renderSentenceList();
   renderSections();
-
-  // A/Bをリセット
-  aPoint = null;
-  bPoint = null;
-  repeatEnabled = false;
-
-  updateABDisplay();
-
-  /*
-   * ここが今回の修正ポイント。
-
-   * playerを作り直さない。
-   * 既存のYouTubeプレイヤーに
-   * 新しい動画IDを渡す。
-   */
-
-  if (
-    player &&
-    typeof player.loadVideoById === "function"
-  ) {
-
-    player.loadVideoById(
-      currentVideoId
-    );
-
-  } else {
-
-    // 万一APIの初期化前だった場合
-    waitForPlayerAndLoad(
-      currentVideoId
-    );
-
-  }
-
+  closeLibrary();
+  loadIntoPlayer(id);
 }
-
-
-function waitForPlayerAndLoad(id) {
-
-  let count = 0;
-
-  const timer =
-    setInterval(
-      () => {
-
-        count++;
-
-        if (
-          player &&
-          typeof player.loadVideoById === "function"
-        ) {
-
-          clearInterval(timer);
-
-          player.loadVideoById(id);
-
-          return;
-
-        }
-
-        if (count >= 50) {
-
-          clearInterval(timer);
-
-          alert(
-            "YouTubeプレイヤーの読み込みに失敗しました。ページを再読み込みしてください。"
-          );
-
-        }
-
-      },
-      100
-    );
-
-}
-
-
-// =====================================================
-// ライブラリ動画削除
-// =====================================================
 
 function deleteSavedVideo(id) {
-
-  const videos =
-    getVideos();
-
-  const title =
-    videos[id]?.title ||
-    "この動画";
-
-  if (
-    !confirm(
-      `「${title}」を削除しますか？\n\nスクリプトとセクションも削除されます。`
-    )
-  ) {
-
-    return;
-
-  }
-
+  if (!confirm("この動画の保存データを削除しますか？\nスクリプト・セクション・録音も削除されます。")) return;
+  const videos = getVideos();
+  (videos[id] && videos[id].sections || []).forEach(s => {
+    delete recBlobs[s.id];
+    idbDel(s.id).catch(() => {});
+  });
   delete videos[id];
+  saveVideos(videos);
 
-  saveVideos(
-    videos
-  );
-
-  // 現在開いている動画を削除した場合
-  if (
-    currentVideoId === id
-  ) {
-
+  if (currentVideoId === id) {
     currentVideoId = null;
     currentVideoTitle = "";
     sections = [];
     scriptSentences = [];
-
-    document.getElementById(
-      "youtubeUrl"
-    ).value = "";
-
-    document.getElementById(
-      "scriptText"
-    ).value = "";
-
-    document.getElementById(
-      "currentVideoTitle"
-    ).textContent =
-      "動画未選択";
-
-    document.getElementById(
-      "scriptSection"
-    ).innerHTML = "";
-
-    document.getElementById(
-      "sections"
-    ).innerHTML = "";
-
-  }
-
-  renderLibrary();
-
-}
-
-
-// =====================================================
-// YouTube操作
-// =====================================================
-
-function playVideo() {
-
-  if (player) {
-    player.playVideo();
-  }
-
-}
-
-
-function pauseVideo() {
-
-  if (player) {
-    player.pauseVideo();
-  }
-
-}
-
-
-function rewind() {
-
-  if (!player) {
-    return;
-  }
-
-  player.seekTo(
-    Math.max(
-      0,
-      player.getCurrentTime() - 5
-    ),
-    true
-  );
-
-}
-
-
-function seekVideo(value) {
-
-  if (
-    !player ||
-    !duration
-  ) {
-
-    return;
-
-  }
-
-  player.seekTo(
-    Number(value),
-    true
-  );
-
-}
-
-
-function setSpeed(speed) {
-
-  if (!player) {
-    return;
-  }
-
-  player.setPlaybackRate(
-    speed
-  );
-
-}
-
-
-// =====================================================
-// タイマー
-// =====================================================
-
-setInterval(
-  () => {
-
-    if (
-      !player ||
-      typeof player.getCurrentTime !==
-        "function"
-    ) {
-
-      return;
-
-    }
-
-    try {
-
-      const current =
-        player.getCurrentTime();
-
-      duration =
-        player.getDuration() || 0;
-
-      const currentEl =
-        document.getElementById(
-          "currentTime"
-        );
-
-      const durationEl =
-        document.getElementById(
-          "duration"
-        );
-
-      const seekEl =
-        document.getElementById(
-          "seekBar"
-        );
-
-      if (currentEl) {
-
-        currentEl.textContent =
-          formatTime(
-            current
-          );
-
-      }
-
-      if (durationEl) {
-
-        durationEl.textContent =
-          formatTime(
-            duration
-          );
-
-      }
-
-      if (seekEl) {
-
-        seekEl.max =
-          duration || 100;
-
-        seekEl.value =
-          current;
-
-      }
-
-      // A/Bリピート
-      if (
-        repeatEnabled &&
-        aPoint !== null &&
-        bPoint !== null &&
-        current >= bPoint
-      ) {
-
-        player.seekTo(
-          aPoint,
-          true
-        );
-
-      }
-
-      // セクションリピート
-      sections.forEach(
-        section => {
-
-          if (
-            section.repeat &&
-            section.start !== null &&
-            section.end !== null &&
-            current >= section.end
-          ) {
-
-            player.seekTo(
-              section.start,
-              true
-            );
-
-          }
-
-        }
-      );
-
-    } catch(e) {}
-
-  },
-  200
-);
-
-
-// =====================================================
-// 初期化
-// =====================================================
-
-document.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-    renderScript();
+    compareId = null;
+    stopAudio();
+    $("videoUrl").value = "";
+    $("videoTitle").textContent = "";
+    $("scriptInput").value = "";
+    renderSentenceList();
     renderSections();
-
+    resetAB();
+    if (playerReady) player.stopVideo();
   }
-);
-
-
-// =====================================================
-// ユーティリティ
-// =====================================================
-
-function formatTime(seconds) {
-
-  if (
-    !seconds ||
-    isNaN(seconds)
-  ) {
-
-    return "0:00";
-
-  }
-
-  const min =
-    Math.floor(
-      seconds / 60
-    );
-
-  const sec =
-    Math.floor(
-      seconds % 60
-    )
-      .toString()
-      .padStart(
-        2,
-        "0"
-      );
-
-  return `${min}:${sec}`;
-
+  renderLibrary();
 }
 
+/* ========== Utils ========== */
+function formatTime(seconds) {
+  if (seconds === null || seconds === undefined || isNaN(seconds)) return "-";
+  seconds = Math.max(0, Math.floor(seconds));
+  return Math.floor(seconds / 60) + ":" + String(seconds % 60).padStart(2, "0");
+}
 
 function escapeHtml(text) {
-
   return String(text)
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-    .replace(
-      /</g,
-      "&lt;"
-    )
-    .replace(
-      />/g,
-      "&gt;"
-    )
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
+/* ========== 初期表示 ========== */
+renderSentenceList();
+renderSections();
+(async function loadRecordings() {
+  try {
+    const keys = await idbKeys();
+    for (const k of keys) recBlobs[k] = await idbGet(k);
+    renderSections();
+  } catch (e) {}
+})();
 </script>
 
+<script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
