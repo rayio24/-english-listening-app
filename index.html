@@ -1,1381 +1,809 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>English Listening Trainer</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Helvetica Neue",
-        sans-serif;
-
-      background: #f5f5f7;
-      color: #222;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin: 0 0 20px;
-    }
-
-    h2 {
-      font-size: 19px;
-      margin: 0 0 15px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-
-      box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-    .label {
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-
-    input[type="text"] {
-      width: 100%;
-      padding: 13px;
-
-      border:
-        1px solid #ccc;
-
-      border-radius: 10px;
-
-      font-size: 16px;
-
-      margin-bottom: 10px;
-    }
-
-    button {
-      border: none;
-
-      border-radius: 10px;
-
-      padding: 11px 15px;
-
-      margin: 4px;
-
-      font-size: 15px;
-
-      background: #222;
-
-      color: white;
-
-      cursor: pointer;
-    }
-
-    button.secondary {
-      background: #e5e5ea;
-      color: #222;
-    }
-
-    button.active {
-      background: #007aff;
-    }
-
-    button.danger {
-      background: #ff3b30;
-    }
-
-    .video {
-      width: 100%;
-
-      aspect-ratio: 16 / 9;
-
-      background: #000;
-
-      border-radius: 12px;
-
-      overflow: hidden;
-    }
-
-    #player {
-      width: 100%;
-      height: 100%;
-    }
-
-    .time {
-      font-size: 18px;
-
-      text-align: center;
-
-      margin: 15px 0 5px;
-
-      font-variant-numeric:
-        tabular-nums;
-    }
-
-    .range {
-      width: 100%;
-    }
-
-    .row {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      justify-content: center;
-
-      gap: 4px;
-    }
-
-    .status {
-      text-align: center;
-
-      color: #666;
-
-      font-size: 14px;
-
-      min-height: 20px;
-
-      margin-top: 8px;
-    }
-
-    .ab {
-      display: grid;
-
-      grid-template-columns:
-        1fr 1fr;
-
-      gap: 10px;
-    }
-
-    .ab button {
-      width: 100%;
-      margin: 0;
-    }
-
-    .ab-value {
-      text-align: center;
-
-      font-size: 14px;
-
-      color: #555;
-
-      margin-top: 5px;
-    }
-
-    .section {
-      border: 1px solid #ddd;
-
-      border-radius: 12px;
-
-      padding: 12px;
-
-      margin-bottom: 10px;
-
-      background: #fafafa;
-    }
-
-    .section-title {
-      font-weight: bold;
-
-      font-size: 16px;
-
-      margin-bottom: 4px;
-    }
-
-    .section-time {
-      color: #666;
-
-      font-size: 14px;
-
-      margin-bottom: 8px;
-    }
-
-    .section-buttons {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 4px;
-    }
-
-    .section-buttons button {
-      margin: 0;
-    }
-
-    .empty {
-      color: #888;
-
-      text-align: center;
-
-      padding: 15px 0;
-
-      font-size: 14px;
-    }
-
-    .small {
-      font-size: 13px;
-      color: #777;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Listening Trainer</title>
+
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f5f5f5;
+  color: #222;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+input, textarea, button {
+  font-size: 16px;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+button {
+  padding: 9px 13px;
+  margin: 3px;
+  border: none;
+  border-radius: 8px;
+  background: #222;
+  color: white;
+}
+
+button:active {
+  opacity: 0.7;
+}
+
+#player {
+  margin-top: 15px;
+}
+
+.controls {
+  margin-top: 10px;
+}
+
+#seekBar {
+  width: 100%;
+}
+
+.time {
+  font-size: 14px;
+  color: #666;
+}
+
+.section {
+  background: white;
+  padding: 15px;
+  margin-top: 12px;
+  border-radius: 12px;
+}
+
+.section-title {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.dictation {
+  margin-top: 12px;
+  padding: 12px;
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.answer {
+  margin-top: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 8px;
+  display: none;
+}
+
+.result {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  display: none;
+}
+
+.correct {
+  background: #dff5df;
+}
+
+.incorrect {
+  background: #ffe0e0;
+}
+
+.small {
+  font-size: 13px;
+  color: #666;
+}
+
+.hidden {
+  display: none;
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h1>🎧 English Listening Trainer</h1>
+<h1>🎧 English Listening Trainer</h1>
 
+<input
+  type="text"
+  id="youtubeUrl"
+  placeholder="YouTube URLを入力"
+/>
 
-  <!-- ========================= -->
-  <!-- URL -->
-  <!-- ========================= -->
+<button onclick="loadVideo()">動画を読み込む</button>
 
-  <div class="card">
+<div id="player"></div>
 
-    <div class="label">
-      YouTube URL
-    </div>
+<div class="controls">
 
-    <input
-      id="urlInput"
-      type="text"
-      placeholder="https://www.youtube.com/watch?v=..."
-    >
-
-    <button onclick="loadVideo()">
-      動画を読み込む
-    </button>
-
-    <div
-      class="status"
-      id="status">
-    </div>
-
+  <div class="time">
+    <span id="currentTime">0:00</span>
+    /
+    <span id="duration">0:00</span>
   </div>
 
+  <input
+    type="range"
+    id="seekBar"
+    min="0"
+    max="100"
+    value="0"
+    step="0.1"
+    oninput="seekVideo(this.value)"
+  >
 
-  <!-- ========================= -->
-  <!-- VIDEO -->
-  <!-- ========================= -->
-
-  <div class="card">
-
-    <div class="video">
-
-      <div id="player"></div>
-
-    </div>
-
-
-    <div
-      class="time"
-      id="timeDisplay">
-
-      00:00 / 00:00
-
-    </div>
-
-
-    <input
-      id="seekBar"
-      class="range"
-      type="range"
-      min="0"
-      max="100"
-      value="0"
-      step="0.1"
-      oninput="seekVideo(this.value)"
-    >
-
-
-    <div class="row">
-
-      <button onclick="playVideo()">
-        ▶ 再生
-      </button>
-
-      <button onclick="pauseVideo()">
-        ⏸ 一時停止
-      </button>
-
-      <button onclick="rewind()">
-        ↩ 5秒戻る
-      </button>
-
-    </div>
-
+  <div>
+    <button onclick="playVideo()">▶ 再生</button>
+    <button onclick="pauseVideo()">⏸ 一時停止</button>
+    <button onclick="rewind()">↩ 5秒戻る</button>
   </div>
 
-
-  <!-- ========================= -->
-  <!-- SPEED -->
-  <!-- ========================= -->
-
-  <div class="card">
-
-    <div class="label">
-      再生速度
-    </div>
-
-
-    <div class="row">
-
-      <button
-        class="secondary"
-        onclick="setSpeed(0.5)">
-        0.5x
-      </button>
-
-      <button
-        class="secondary"
-        onclick="setSpeed(0.75)">
-        0.75x
-      </button>
-
-      <button
-        class="secondary"
-        onclick="setSpeed(1)">
-        1x
-      </button>
-
-      <button
-        class="secondary"
-        onclick="setSpeed(1.25)">
-        1.25x
-      </button>
-
-      <button
-        class="secondary"
-        onclick="setSpeed(1.5)">
-        1.5x
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- ========================= -->
-  <!-- A-B -->
-  <!-- ========================= -->
-
-  <div class="card">
-
-    <h2>
-      A-Bリピート
-    </h2>
-
-
-    <div class="ab">
-
-      <div>
-
-        <button onclick="setA()">
-          A地点を設定
-        </button>
-
-        <div
-          class="ab-value"
-          id="aValue">
-
-          A: --:--
-
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <button onclick="setB()">
-          B地点を設定
-        </button>
-
-        <div
-          class="ab-value"
-          id="bValue">
-
-          B: --:--
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <div class="row"
-         style="margin-top:12px;">
-
-      <button
-        id="repeatButton"
-        onclick="toggleRepeat()">
-
-        A-Bリピート OFF
-
-      </button>
-
-
-      <button
-        class="secondary"
-        onclick="clearAB()">
-
-        リセット
-
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- ========================= -->
-  <!-- SECTION -->
-  <!-- ========================= -->
-
-  <div class="card">
-
-    <h2>
-      📚 セクション
-    </h2>
-
-
-    <div class="small">
-
-      A地点とB地点を設定してから
-      「セクション追加」を押してください。
-
-    </div>
-
-
-    <div class="row"
-         style="margin-top:10px;">
-
-      <button onclick="addSection()">
-
-        ＋ セクション追加
-
-      </button>
-
-    </div>
-
-
-    <div
-      id="sections">
-
-    </div>
-
+  <div>
+    <button onclick="setSpeed(0.5)">0.5x</button>
+    <button onclick="setSpeed(0.75)">0.75x</button>
+    <button onclick="setSpeed(1)">1x</button>
+    <button onclick="setSpeed(1.25)">1.25x</button>
+    <button onclick="setSpeed(1.5)">1.5x</button>
   </div>
 
 </div>
 
+<hr>
 
-<!-- YouTube API -->
+<h3>A/Bリピート</h3>
+
+<button onclick="setA()">A地点</button>
+<button onclick="setB()">B地点</button>
+<button onclick="toggleRepeat()">ON/OFF</button>
+<button onclick="clearAB()">クリア</button>
+
+<p id="abDisplay">A: - / B: - / OFF</p>
+
+<button onclick="addSection()">＋セクション追加</button>
+
+<h3>セクション</h3>
+
+<div id="sections"></div>
+
+</div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 
-
 <script>
 
-
-// =====================================================
-// VARIABLES
-// =====================================================
-
-let player = null;
-
+let player;
 let aPoint = null;
-
 let bPoint = null;
-
 let repeatEnabled = false;
-
 let duration = 0;
 
 let currentVideoId = null;
-
 let sections = [];
 
 
-// =====================================================
-// YOUTUBE API READY
-// =====================================================
+// ============================
+// YouTube
+// ============================
 
 function onYouTubeIframeAPIReady() {
-
-  player = new YT.Player(
-    "player",
-    {
-
-      width: "100%",
-
-      height: "100%",
-
-      videoId: "",
-
-      playerVars: {
-
-        playsinline: 1,
-
-        rel: 0
-
-      },
-
-      events: {
-
-        onReady: onPlayerReady
-
+  player = new YT.Player("player", {
+    height: "220",
+    width: "100%",
+    videoId: "",
+    playerVars: {
+      playsinline: 1
+    },
+    events: {
+      onReady: () => {
+        console.log("YouTube ready");
       }
-
     }
-  );
-
+  });
 }
 
-
-// =====================================================
-// PLAYER READY
-// =====================================================
-
-function onPlayerReady() {
-
-  document.getElementById("status").textContent =
-    "動画URLを入力してください";
-
-  startTimer();
-
-}
-
-
-// =====================================================
-// LOAD VIDEO
-// =====================================================
-
-function loadVideo() {
-
-  const url =
-    document
-      .getElementById("urlInput")
-      .value
-      .trim();
-
-
-  const videoId =
-    extractVideoId(url);
-
-
-  if (!videoId) {
-
-    document.getElementById("status").textContent =
-      "YouTube URLを確認してください";
-
-    return;
-
-  }
-
-
-  currentVideoId = videoId;
-
-
-  player.loadVideoById(videoId);
-
-
-  // A/B reset
-
-  aPoint = null;
-
-  bPoint = null;
-
-  repeatEnabled = false;
-
-
-  updateABDisplay();
-
-
-  document.getElementById(
-    "repeatButton"
-  ).textContent =
-    "A-Bリピート OFF";
-
-
-  // この動画のセクションを読み込む
-
-  loadSections();
-
-
-  document.getElementById("status").textContent =
-    "動画を読み込みました";
-
-}
-
-
-// =====================================================
-// EXTRACT VIDEO ID
-// =====================================================
 
 function extractVideoId(url) {
 
   try {
 
-    const parsed =
-      new URL(url);
+    const parsed = new URL(url);
 
-
-    if (
-      parsed.hostname.includes(
-        "youtu.be"
-      )
-    ) {
-
-      return parsed
-        .pathname
-        .substring(1);
-
+    if (parsed.hostname.includes("youtu.be")) {
+      return parsed.pathname.substring(1);
     }
 
-
-    if (
-      parsed.hostname.includes(
-        "youtube.com"
-      )
-    ) {
-
-      return parsed
-        .searchParams
-        .get("v");
-
+    if (parsed.hostname.includes("youtube.com")) {
+      return parsed.searchParams.get("v");
     }
 
-  }
-  catch (e) {
-
-    return null;
-
-  }
-
+  } catch(e) {}
 
   return null;
-
 }
 
 
-// =====================================================
-// PLAY
-// =====================================================
+function loadVideo() {
+
+  const url = document.getElementById("youtubeUrl").value;
+
+  const id = extractVideoId(url);
+
+  if (!id) {
+    alert("YouTube URLを確認してください");
+    return;
+  }
+
+  currentVideoId = id;
+
+  player.loadVideoById(id);
+
+  aPoint = null;
+  bPoint = null;
+  repeatEnabled = false;
+
+  loadSections();
+
+  updateABDisplay();
+}
+
 
 function playVideo() {
-
-  if (player) {
-
-    player.playVideo();
-
-  }
-
+  if (player) player.playVideo();
 }
 
-
-// =====================================================
-// PAUSE
-// =====================================================
 
 function pauseVideo() {
-
-  if (player) {
-
-    player.pauseVideo();
-
-  }
-
+  if (player) player.pauseVideo();
 }
 
-
-// =====================================================
-// REWIND
-// =====================================================
 
 function rewind() {
 
   if (!player) return;
 
+  const current = player.getCurrentTime();
 
-  const current =
-    player.getCurrentTime();
-
-
-  player.seekTo(
-    Math.max(
-      0,
-      current - 5
-    ),
-    true
-  );
-
+  player.seekTo(Math.max(0, current - 5), true);
 }
 
 
-// =====================================================
-// SPEED
-// =====================================================
+function seekVideo(value) {
+
+  if (!player || !duration) return;
+
+  const time = Number(value);
+
+  player.seekTo(time, true);
+}
+
 
 function setSpeed(speed) {
 
   if (!player) return;
 
-
-  player.setPlaybackRate(
-    speed
-  );
-
+  player.setPlaybackRate(speed);
 }
 
 
-// =====================================================
-// SEEK
-// =====================================================
-
-function seekVideo(value) {
-
-  if (
-    !player ||
-    !duration
-  ) return;
-
-
-  const time =
-    (value / 100) *
-    duration;
-
-
-  player.seekTo(
-    time,
-    true
-  );
-
-}
-
-
-// =====================================================
-// SET A
-// =====================================================
+// ============================
+// A/B
+// ============================
 
 function setA() {
 
   if (!player) return;
 
-
-  aPoint =
-    player.getCurrentTime();
-
-
-  if (
-    bPoint !== null &&
-    aPoint >= bPoint
-  ) {
-
-    bPoint = null;
-
-  }
-
+  aPoint = player.getCurrentTime();
 
   updateABDisplay();
-
 }
 
-
-// =====================================================
-// SET B
-// =====================================================
 
 function setB() {
 
   if (!player) return;
 
-
-  bPoint =
-    player.getCurrentTime();
-
-
-  if (
-    aPoint !== null &&
-    bPoint <= aPoint
-  ) {
-
-    aPoint = null;
-
-  }
-
+  bPoint = player.getCurrentTime();
 
   updateABDisplay();
-
 }
 
-
-// =====================================================
-// TOGGLE REPEAT
-// =====================================================
 
 function toggleRepeat() {
 
-  if (
-    aPoint === null ||
-    bPoint === null
-  ) {
-
-    alert(
-      "まずA地点とB地点を設定してください"
-    );
-
+  if (aPoint === null || bPoint === null) {
+    alert("先にA地点とB地点を設定してください");
     return;
-
   }
 
+  if (bPoint <= aPoint) {
+    alert("B地点はA地点より後にしてください");
+    return;
+  }
 
-  repeatEnabled =
-    !repeatEnabled;
+  repeatEnabled = !repeatEnabled;
 
-
-  document.getElementById(
-    "repeatButton"
-  ).textContent =
-    repeatEnabled
-      ? "A-Bリピート ON"
-      : "A-Bリピート OFF";
-
+  updateABDisplay();
 }
 
-
-// =====================================================
-// CLEAR A/B
-// =====================================================
 
 function clearAB() {
 
   aPoint = null;
-
   bPoint = null;
-
   repeatEnabled = false;
 
-
-  document.getElementById(
-    "repeatButton"
-  ).textContent =
-    "A-Bリピート OFF";
-
-
   updateABDisplay();
-
 }
 
-
-// =====================================================
-// UPDATE A/B DISPLAY
-// =====================================================
 
 function updateABDisplay() {
 
-  document.getElementById(
-    "aValue"
-  ).textContent =
-    "A: " +
-    (
-      aPoint === null
-        ? "--:--"
-        : formatTime(aPoint)
-    );
+  const a =
+    aPoint === null
+      ? "-"
+      : formatTime(aPoint);
 
+  const b =
+    bPoint === null
+      ? "-"
+      : formatTime(bPoint);
 
-  document.getElementById(
-    "bValue"
-  ).textContent =
-    "B: " +
-    (
-      bPoint === null
-        ? "--:--"
-        : formatTime(bPoint)
-    );
-
+  document.getElementById("abDisplay").textContent =
+    `A: ${a} / B: ${b} / ${repeatEnabled ? "ON" : "OFF"}`;
 }
 
 
-// =====================================================
-// ADD SECTION
-// =====================================================
+// ============================
+// Sections
+// ============================
 
 function addSection() {
 
-  if (
-    aPoint === null ||
-    bPoint === null
-  ) {
-
-    alert(
-      "先にA地点とB地点を設定してください"
-    );
-
+  if (!currentVideoId) {
+    alert("先に動画を読み込んでください");
     return;
-
   }
 
-
-  if (
-    !currentVideoId
-  ) {
-
-    alert(
-      "先に動画を読み込んでください"
-    );
-
+  if (aPoint === null || bPoint === null) {
+    alert("先にA地点とB地点を設定してください");
     return;
-
   }
 
+  if (bPoint <= aPoint) {
+    alert("B地点はA地点より後にしてください");
+    return;
+  }
 
   const section = {
-
-    id:
-      Date.now(),
-
-    start:
-      aPoint,
-
-    end:
-      bPoint,
-
-    repeat:
-      false
-
+    id: Date.now(),
+    start: aPoint,
+    end: bPoint,
+    repeat: false,
+    answer: ""
   };
-
 
   sections.push(section);
 
-
   saveSections();
-
-
   renderSections();
-
 }
 
-
-// =====================================================
-// RENDER SECTIONS
-// =====================================================
 
 function renderSections() {
 
-  const container =
-    document.getElementById(
-      "sections"
-    );
-
+  const container = document.getElementById("sections");
 
   container.innerHTML = "";
 
+  sections.forEach((section, index) => {
 
-  if (
-    sections.length === 0
-  ) {
+    const div = document.createElement("div");
 
-    container.innerHTML =
-      '<div class="empty">' +
-      'まだセクションがありません' +
-      '</div>';
+    div.className = "section";
 
-    return;
+    div.innerHTML = `
 
-  }
+      <div class="section-title">
+        Section ${index + 1}
+      </div>
 
+      <div>
+        ${formatTime(section.start)}
+        →
+        ${formatTime(section.end)}
+      </div>
 
-  sections.forEach(
-    (section, index) => {
+      <div>
 
+        <button onclick="playSection(${section.id})">
+          ▶ 再生
+        </button>
 
-      const div =
-        document.createElement(
-          "div"
-        );
+        <button onclick="toggleSectionRepeat(${section.id})">
+          ${section.repeat ? "🔁 リピートON" : "🔁 リピートOFF"}
+        </button>
 
+        <button onclick="openDictation(${section.id})">
+          📝 ディクテーション
+        </button>
 
-      div.className =
-        "section";
+        <button onclick="deleteSection(${section.id})">
+          🗑 削除
+        </button>
 
+      </div>
 
-      div.innerHTML = `
+      <div
+        id="dictation-${section.id}"
+        class="dictation hidden"
+      >
 
-        <div class="section-title">
-          Section ${index + 1}
+        <div class="small">
+          聞こえた英文を入力してください。
         </div>
 
-        <div class="section-time">
-          ${formatTime(section.start)}
-          →
-          ${formatTime(section.end)}
+        <textarea
+          id="input-${section.id}"
+          placeholder="ここに聞き取った英文を入力"
+        ></textarea>
+
+        <button onclick="checkAnswer(${section.id})">
+          採点
+        </button>
+
+        <button onclick="toggleAnswer(${section.id})">
+          答えを見る
+        </button>
+
+        <button onclick="saveAnswer(${section.id})">
+          正解を保存
+        </button>
+
+        <div
+          id="answer-${section.id}"
+          class="answer"
+        >
+          <strong>正解：</strong>
+          <div id="answerText-${section.id}">
+            ${escapeHtml(section.answer || "まだ正解が登録されていません")}
+          </div>
         </div>
 
-        <div class="section-buttons">
+        <div
+          id="result-${section.id}"
+          class="result"
+        ></div>
 
-          <button
-            onclick="playSection(${section.id})">
+      </div>
+    `;
 
-            ▶ 再生
+    container.appendChild(div);
 
-          </button>
-
-
-          <button
-            class="${
-              section.repeat
-                ? "active"
-                : "secondary"
-            }"
-            onclick="toggleSectionRepeat(${section.id})">
-
-            ${
-              section.repeat
-                ? "🔁 リピートON"
-                : "🔁 リピートOFF"
-            }
-
-          </button>
-
-
-          <button
-            class="danger"
-            onclick="deleteSection(${section.id})">
-
-            削除
-
-          </button>
-
-        </div>
-      `;
-
-
-      container.appendChild(div);
-
-    }
-  );
-
+  });
 }
 
 
-// =====================================================
-// PLAY SECTION
-// =====================================================
+// ============================
+// Section playback
+// ============================
 
 function playSection(id) {
 
-  const section =
-    sections.find(
-      s => s.id === id
-    );
-
+  const section = sections.find(s => s.id === id);
 
   if (!section) return;
-
-
-  if (!player) return;
-
-
-  player.seekTo(
-    section.start,
-    true
-  );
-
-
-  player.playVideo();
-
-
-  // A/Bリピートを一旦解除
 
   repeatEnabled = false;
 
+  player.seekTo(section.start, true);
+  player.playVideo();
 
-  document.getElementById(
-    "repeatButton"
-  ).textContent =
-    "A-Bリピート OFF";
-
+  updateABDisplay();
 }
 
-
-// =====================================================
-// SECTION REPEAT
-// =====================================================
 
 function toggleSectionRepeat(id) {
 
-  const section =
-    sections.find(
-      s => s.id === id
-    );
-
+  const section = sections.find(s => s.id === id);
 
   if (!section) return;
 
-
-  section.repeat =
-    !section.repeat;
-
+  section.repeat = !section.repeat;
 
   saveSections();
-
-
   renderSections();
-
 }
 
-
-// =====================================================
-// DELETE SECTION
-// =====================================================
 
 function deleteSection(id) {
 
   sections =
-    sections.filter(
-      s => s.id !== id
-    );
-
+    sections.filter(s => s.id !== id);
 
   saveSections();
-
-
   renderSections();
-
 }
 
 
-// =====================================================
-// SAVE SECTIONS
-// =====================================================
+// ============================
+// Dictation
+// ============================
+
+function openDictation(id) {
+
+  const box =
+    document.getElementById(`dictation-${id}`);
+
+  if (!box) return;
+
+  box.classList.toggle("hidden");
+}
+
+
+function saveAnswer(id) {
+
+  const section =
+    sections.find(s => s.id === id);
+
+  if (!section) return;
+
+  const answer =
+    prompt(
+      "このセクションの正解英文を入力してください",
+      section.answer || ""
+    );
+
+  if (answer === null) return;
+
+  section.answer = answer;
+
+  saveSections();
+  renderSections();
+
+  const box =
+    document.getElementById(`dictation-${id}`);
+
+  if (box) {
+    box.classList.remove("hidden");
+  }
+}
+
+
+function toggleAnswer(id) {
+
+  const answer =
+    document.getElementById(`answer-${id}`);
+
+  if (!answer) return;
+
+  if (answer.style.display === "block") {
+    answer.style.display = "none";
+  } else {
+    answer.style.display = "block";
+  }
+}
+
+
+function normalizeText(text) {
+
+  return text
+    .toLowerCase()
+    .replace(/[.,!?;:"'“”‘’()[\]{}]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+
+function checkAnswer(id) {
+
+  const section =
+    sections.find(s => s.id === id);
+
+  if (!section) return;
+
+  if (!section.answer) {
+
+    alert("先に「正解を保存」してください");
+
+    return;
+  }
+
+  const input =
+    document.getElementById(`input-${id}`).value;
+
+  const result =
+    document.getElementById(`result-${id}`);
+
+  const normalizedInput =
+    normalizeText(input);
+
+  const normalizedAnswer =
+    normalizeText(section.answer);
+
+  result.style.display = "block";
+
+  if (normalizedInput === normalizedAnswer) {
+
+    result.className = "result correct";
+
+    result.innerHTML =
+      "🎉 正解！";
+
+  } else {
+
+    result.className = "result incorrect";
+
+    result.innerHTML = `
+      <strong>惜しいです。</strong><br><br>
+      あなたの回答：<br>
+      ${escapeHtml(input)}<br><br>
+      正解：<br>
+      ${escapeHtml(section.answer)}
+    `;
+  }
+}
+
+
+// ============================
+// Storage
+// ============================
 
 function saveSections() {
 
   if (!currentVideoId) return;
 
-
   localStorage.setItem(
-
-    "englishTrainer_" +
-    currentVideoId,
-
-    JSON.stringify(
-      sections
-    )
-
+    `englishTrainer_${currentVideoId}`,
+    JSON.stringify(sections)
   );
-
 }
 
-
-// =====================================================
-// LOAD SECTIONS
-// =====================================================
 
 function loadSections() {
 
   if (!currentVideoId) return;
 
-
   const saved =
     localStorage.getItem(
-
-      "englishTrainer_" +
-      currentVideoId
-
+      `englishTrainer_${currentVideoId}`
     );
-
 
   if (saved) {
 
     try {
-
-      sections =
-        JSON.parse(saved);
-
-    }
-    catch (e) {
-
+      sections = JSON.parse(saved);
+    } catch(e) {
       sections = [];
-
     }
 
-  }
-  else {
+  } else {
 
     sections = [];
 
   }
 
-
   renderSections();
-
 }
 
 
-// =====================================================
-// FORMAT TIME
-// =====================================================
+// ============================
+// Timer
+// ============================
+
+setInterval(() => {
+
+  if (!player || !player.getCurrentTime) return;
+
+  const current =
+    player.getCurrentTime();
+
+  duration =
+    player.getDuration() || 0;
+
+  document.getElementById("currentTime").textContent =
+    formatTime(current);
+
+  document.getElementById("duration").textContent =
+    formatTime(duration);
+
+  document.getElementById("seekBar").max =
+    duration;
+
+  document.getElementById("seekBar").value =
+    current;
+
+
+  // A/B repeat
+
+  if (
+    repeatEnabled &&
+    aPoint !== null &&
+    bPoint !== null &&
+    current >= bPoint
+  ) {
+
+    player.seekTo(aPoint, true);
+  }
+
+
+  // Section repeat
+
+  sections.forEach(section => {
+
+    if (
+      section.repeat &&
+      current >= section.end &&
+      current < section.end + 2
+    ) {
+
+      player.seekTo(section.start, true);
+
+    }
+
+  });
+
+}, 200);
+
+
+// ============================
+// Utilities
+// ============================
 
 function formatTime(seconds) {
 
-  seconds =
-    Math.floor(seconds);
+  if (!seconds || isNaN(seconds)) {
+    return "0:00";
+  }
 
+  const min =
+    Math.floor(seconds / 60);
 
-  const minutes =
-    Math.floor(
-      seconds / 60
-    );
+  const sec =
+    Math.floor(seconds % 60)
+      .toString()
+      .padStart(2, "0");
 
-
-  const secs =
-    seconds % 60;
-
-
-  return (
-    String(minutes)
-      .padStart(2, "0")
-    +
-    ":"
-    +
-    String(secs)
-      .padStart(2, "0")
-  );
-
+  return `${min}:${sec}`;
 }
 
 
-// =====================================================
-// TIMER
-// =====================================================
+function escapeHtml(text) {
 
-function startTimer() {
-
-  setInterval(
-    () => {
-
-      if (
-        !player ||
-        typeof player.getCurrentTime !==
-          "function"
-      ) {
-
-        return;
-
-      }
-
-
-      try {
-
-        const current =
-          player.getCurrentTime();
-
-
-        duration =
-          player.getDuration();
-
-
-        if (!duration) return;
-
-
-        document.getElementById(
-          "timeDisplay"
-        ).textContent =
-
-          formatTime(current)
-          +
-          " / "
-          +
-          formatTime(duration);
-
-
-        document.getElementById(
-          "seekBar"
-        ).value =
-
-          (
-            current /
-            duration
-          ) * 100;
-
-
-        // ---------------------------------
-        // A-B repeat
-        // ---------------------------------
-
-        if (
-          repeatEnabled &&
-          aPoint !== null &&
-          bPoint !== null &&
-          current >= bPoint
-        ) {
-
-          player.seekTo(
-            aPoint,
-            true
-          );
-
-        }
-
-
-        // ---------------------------------
-        // Section repeat
-        // ---------------------------------
-
-        const repeatingSection =
-          sections.find(
-            section =>
-              section.repeat === true &&
-              current >= section.end &&
-              current < section.end + 2
-          );
-
-
-        if (
-          repeatingSection
-        ) {
-
-          player.seekTo(
-            repeatingSection.start,
-            true
-          );
-
-        }
-
-      }
-      catch (e) {
-
-        // プレイヤー準備中は無視
-
-      }
-
-    },
-
-    200
-
-  );
-
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
-
 
 </script>
 
